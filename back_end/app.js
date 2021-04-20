@@ -7,7 +7,7 @@ require('dotenv').config();
 const helmet = require('helmet');
 
 // ouvrir une connection sur la bdd
-const sequelize = new Sequelize('mysql://root:asta8firoallah@localhost:3306/socialmedia') 
+const sequelize = new Sequelize('mysql://root:#####@localhost:3306/socialmedia') 
 
 try {
    sequelize.authenticate();
