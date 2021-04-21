@@ -12,10 +12,12 @@ exports.signup = (req, res) => {// création des nouveaux users
   let lastname = req.body.lastname;
   let email = req.body.email;
   let pw = req.body.pw;
-  let img = req.body.img;
+  let img = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
   let bio=  req.body.bio;
+
+  console.log(firstname, lastname, email, pw, img, bio);
  
- if (!(emailRegEx.test(email) && passwordRegEx.test(pw) && textRegEex.firstname && textRegEex.lastname))  {
+ if (!(emailRegEx.test(email) && passwordRegEx.test(pw) && textRegEex.test(firstname) && textRegEex.test(lastname)))  {
     return res.status(400).json({ message: "email or password not valid" });
   } else {
   User.findOne({
@@ -34,7 +36,7 @@ exports.signup = (req, res) => {// création des nouveaux users
           img :img,
           bio :  bio,
         })// enregistrer le nouveau user dans la BDD
-          .then(() => res.status(201).json({ message: 'Utilisateur addes !' }))
+          .then(() => res.status(201).json({ message: 'User addd!' }))
           .catch(error => {
             return res.status(400).json({ error: 'cannot add user'})
           });

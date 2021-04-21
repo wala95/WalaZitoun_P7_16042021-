@@ -1,13 +1,13 @@
 const express = require('express');
 const { Sequelize } = require('sequelize');;// driver(api) qui permet de communiquer avec la base de données mongooDB
-
+// const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 const path = require('path');
 require('dotenv').config();
 const helmet = require('helmet');
 
 // ouvrir une connection sur la bdd
-const sequelize = new Sequelize('mysql://root:#####@localhost:3306/socialmedia') 
+const sequelize = new Sequelize('mysql://root:asta8firoallah@localhost:3306/socialmedia') 
 
 try {
    sequelize.authenticate();
@@ -29,7 +29,7 @@ app.use(express.json()); // body json
 app.use(express.urlencoded({ extended: true })) //raw data
 
 app.use('/images', express.static(path.join(__dirname, 'images')));// permet d'acceder aux images
-
+// app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
 
 app.use(helmet()); 
