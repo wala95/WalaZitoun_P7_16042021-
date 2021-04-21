@@ -1,0 +1,36 @@
+body {
+position: relative;
+}
+body::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: url("./images/street.jpg");
+  background-attachment: fixed; 
+  opacity: 0.4;
+  content: "";
+  z-index: -1;
+}
+nav, footer {
+  background-color: #03224c;
+
+}
+
+#logo {  
+  width:  200px;
+  height: 40px;
+  margin-top: 5px;
+}
+li {
+  margin:5px;
+} 
+
+.fab {
+  font-size: 25px;
+  margin: 13.5px;
+}
+
+
+
