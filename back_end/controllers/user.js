@@ -5,7 +5,7 @@ const User = models.User
 
 const emailRegEx = /\w+@\w+\.\w{2,10}/;
 const passwordRegEx = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
-const textRegEex = new RegExp("[a-zA-Z]{2,}");;
+const textRegEex = new RegExp("[a-zA-Z]{2,}");
 
 exports.signup = (req, res) => {// création des nouveaux users
   let firstname = req.body.firstname;
@@ -53,20 +53,23 @@ exports.signup = (req, res) => {// création des nouveaux users
 };
 
 exports.login = (req, res, next) => { // permettre au utilisateur de se connecter
-  User.findOne({ email: req.body.email })// trouver l'utilisateur
-    .then(user => { // vérifier si on a trouvé un user ou non
+  //TODO add control email and password not empty
+
+  User.findOne({where: { email: req.body.email }})// trouver l'utilisateur
+    .then(user => { 
+// vérifier si on a trouvé un user ou non
       if (!user) { // si user non trouvé
         return res.status(401).json({ error: 'Utilisateur non trouvé !' });
       }
-      bcrypt.compare(req.body.password, user.password) // user trouvé : comparer le MDP avec ceux enregistré dans BD
+      bcrypt.compare(req.body.pw, user.pw) // user trouvé : comparer le MDP avec ceux enregistré dans BD
         .then(valid => {
           if (!valid) {// si mauvais MDP
             return res.status(401).json({ message: 'Mot de passe incorrect !' });
           }
           res.status(200).json({ //bon MDP et renvoyer un objet JSON
-            userId: user._id,
+            userId: user.id,
             token: jwt.sign(
-              { userId: user._id },// identifiant utilisateur
+              { userId: user.id },// identifiant utilisateur
               'RANDOM_TOKEN_SECRET',// clée secrete pour l'encoudage
               { expiresIn: '24h' }// duréé de token
             )
