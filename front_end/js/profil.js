@@ -46,6 +46,7 @@ fetch(userUrl, {
     img.src = data.img;
     firstname.textContent = data.firstname;
     lastname.textContent = data.lastname;
+    email.textContent = data.email;
     bio.textContent = data.bio;
   })
   .catch(erreurCatche => console.log(`il y a une erreur ${erreurCatche.message}`));
