@@ -12,7 +12,10 @@ exports.signup = (req, res) => {// création des nouveaux users
   let lastname = req.body.lastname;
   let email = req.body.email;
   let pw = req.body.pw;
-  let img = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+  let img = `${req.protocol}://${req.get('host')}/images/no_photo_profil.png`;
+  if (req.file) {
+    img = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+  }
   let bio=  req.body.bio;
 
   console.log(firstname, lastname, email, pw, img, bio);
@@ -45,10 +48,6 @@ exports.signup = (req, res) => {// création des nouveaux users
       return res.status(409).json({ 'error': "user already exist" });
     }
   })
-  // .catch(function(err){
-  //   return res.status(500).json({ 'error': "unable to verify user" });
-  // })
-
   };
 };
 

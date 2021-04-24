@@ -5,7 +5,7 @@ let pw = document.getElementById("pw");
 
 //  Envoyer les valeurs du formulaire a l'api
 
-let signupUrl = `http://127.0.0.1:3000/api/auth/login`;
+let loginUrl = `http://127.0.0.1:3000/api/auth/login`;
 
 function sendToServer(){
 
@@ -14,7 +14,7 @@ let data = {
   pw: pw.value
 }
 
-  fetch(signupUrl,{
+  fetch(loginUrl,{
     method : 'post',
     headers: {
       'Accept': 'application/json',

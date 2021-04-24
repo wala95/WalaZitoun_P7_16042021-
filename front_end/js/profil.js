@@ -13,7 +13,7 @@ const imgModify = document.getElementById('imgModify');
 const firstnameModify = document.getElementById('firstnameModify');
 const lastnameModify = document.getElementById('lastnameModify');
 const bioModify = document.getElementById('bioModify');
-
+const pwDelete = document.getElementById('pwDelete');
 
 ///Récuperer l'url avec l'id qui correspond au user selectionné
 const userString = localStorage.getItem('user');
@@ -55,13 +55,15 @@ fetch(userUrl, {
 
   //  Envoyer les valeurs modifiées du formulaire a l'api
 function modifyProfil(){
-
+  let listInfo = [{"value":firstnameModify.value, "name":"firstname"}, 
+  {"value":lastnameModify.value, "name":"lastname"}, 
+  {"value":bioModify.value, "name":"bio"},
+  {"value":imgModify.files[0], "name":"image"},]
   let formData = new FormData();
-  formData.append("image", imgModify.files[0]);
-  formData.append( "firstname", firstnameModify.value);
-  formData.append( "lastname", lastnameModify.value);
-  formData.append( "bio", bioModify.value);
-
+  for (let info of listInfo){
+    if(info.value){
+    formData.append(info.name, info.value);
+  }}
   fetch(userUrl,{
     method : 'put',
     headers: {
@@ -99,7 +101,12 @@ function deleteProfil(){
     method : 'delete',
     headers: {
       'Authorization': `bearer ${userJson.token}`,
-    },
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }, 
+    body : JSON.stringify({
+      pw : pwDelete.value
+    })
   })
   .then(response => {
       if (response.ok == true) {
@@ -126,8 +133,8 @@ btnDelete.addEventListener('click', ()=> {
 
 
 // Deconnexion
-let btnDeconnexion = document.getElementById('btnDelete');
+let btnDeconnexion = document.getElementById('btnDeconnexion');
 btnDeconnexion.addEventListener('click', ()=> {
-  window.location.href = 'connexion.html'
+  window.location.href = 'inscription.html'
   localStorage.removeItem('user');
 });
