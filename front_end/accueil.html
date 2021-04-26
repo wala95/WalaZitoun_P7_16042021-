@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groupomania</title>
+    <link rel="stylesheet" href="./css/style.css" type='text/css' />
+    <link rel="stylesheet" href="./css/accueil.css" type='text/css' />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="shortcut icon" type="image/ico" href="./images/icon.png">
+    <script src="https://kit.fontawesome.com/ed8a484479.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="container-fluid ">
+        <div class="row ">
+            <div class="col navbar navbar-expand-lg navbar-light d-flex flex-row bd-highlight mb-2">
+                <a class="navbar-brand " href="accueil.html">
+                    <img src="./images/icon-left-font-monochrome-white.svg" alt="logo " id="logo">
+                </a>
+                <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarToggleExternalContent">
+                    <ul class="navbar-nav  ">
+                        <li class="nav-item ">
+                            <a class="nav-link  text-light" href="accueil.html">Accueil</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-light" href="profil.html">Profil</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-light" href="#">Contact</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-light" href="connexion.html" id="btnDeconnexion">Déconnexion</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- BODY -->
+    <main>
+
+        <div class="container mt-5">
+            <div class="d-flex justify-content-center row">
+                <div class="col-md-8">
+                    <div class="d-flex flex-column comment-section">
+                        <div class="bg-white p-2">
+                            <h4 class="text-center">Créer une publication</h4>
+                            <div class="d-flex flex-row user-info"><img src="https://i.imgur.com/RpzrMR2.jpg" width="70"
+                                    height="70" id="img">
+                                <div class="d-flex flex-column justify-content-start ml-2">
+                                    <span class="d-block font-weight-bold text-danger" id="lastname"></span>
+                                    <span class="d-block font-weight-bold  text-danger" id="firstname"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light p-2">
+                            <div class="d-flex flex-row align-items-start"><textarea
+                                    class="form-control ml-1 shadow-none textarea"
+                                    placeholder="Que voulez-vous partager?" id="content" name="publication"></textarea></div>
+                            <input type="file"  name="image" class="form-control-file rounded m-1 mt-2"
+                                accept="image/png, image/jpeg, image/jpg, image/gif" id="image">
+
+
+                            <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none"
+                                    type="button" id="btnPublication">Partager</button>
+                                <button class="btn btn-outline-primary btn-sm ml-1 shadow-none"
+                                    type="button">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="container mt-5">
+            <div class="d-flex justify-content-center row">
+                <div class="col-md-8">
+                    <div class="d-flex flex-column comment-section">
+                        <div class="bg-white p-2">
+                            <div class="d-flex flex-row user-info"><img class="rounded-circle"
+                                    src="https://i.imgur.com/RpzrMR2.jpg" width="40">
+                                <div class="d-flex flex-column justify-content-start ml-2">
+                                    <span class="d-block font-weight-bold text-danger" id="lastname">ouersighni</span>
+                                    <span class="d-block font-weight-bold  text-danger" id="firstname">wala</span>
+                                    <span class="date text-black-50" id="createdAt">Partagé le - Jan 2020</span></div>
+                            </div>
+                            <div class="mt-2">
+                                <p class="comment-text" id="contentCreated">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="bg-white">
+                            <div class="d-flex flex-row fs-12">
+                                <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span
+                                        class="ml-1">Like</span></div>
+                                <div class="disike p-2 cursor"><i class="far fa-thumbs-down"></i><span
+                                        class="ml-1">Dislike</span></div>
+                                <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span
+                                        class="ml-1">Commentaires</span></div>
+                            </div>
+                        </div>
+                        <div class="bg-light p-2">
+                            <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
+                                    src="https://i.imgur.com/RpzrMR2.jpg" width="40"><textarea
+                                    class="form-control ml-1 shadow-none textarea"></textarea></div>
+                            <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none"
+                                    type="button">Commenter</button><button
+                                    class="btn btn-outline-primary btn-sm ml-1 shadow-none"
+                                    type="button">Supprimer</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </main>
+    <!-- FOOTER -->
+
+    <footer class="bloc bgc-atomic-tangerine d-bloc mt-5" id="bloc-8">
+        <div class="container bloc-sm">
+            <div class="row">
+                <div class="col-sm-12 ">
+                    <div class="row row-no-gutters social ">
+                        <div class="col-sm-3  ">
+                            <div class="text-center ">
+                                <a class="social text-light" href="#"
+                                    aria-label="lien twitter de l'agence Groupomania"><span
+                                        class="fab fa-twitter "></span></a>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="text-center">
+                                <a class="social text-light " href="#"
+                                    aria-label="lien facebook de l'agence Groupomania"><span
+                                        class="fab fa-facebook "></span></a>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="text-center">
+                                <a class="social text-light" href="#"
+                                    aria-label="lien dribble de l'agence Groupomania"><span
+                                        class="fab fa-dribbble"></span></a>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="text-center">
+                                <a class="social text-light" href="#"
+                                    aria-label="lien instagram de l'agence Groupomania"><span
+                                        class="fab fa-instagram "></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="./js/accueil.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

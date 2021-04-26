@@ -31,7 +31,7 @@ let data = {
       }
     })
   .then(res => res.json())
-  .then(data => {
+  .then(data => {//envoyer le token et l'user id dans le local.storage
       localStorage.setItem('user', JSON.stringify({
           id : data.userId,
           token : data.token, 

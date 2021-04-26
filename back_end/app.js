@@ -1,6 +1,7 @@
 const express = require('express');
 const { Sequelize } = require('sequelize');;// driver(api) qui permet de communiquer avec la base de données mongooDB
 const profilRoutes = require('./routes/profil');
+const publicationRoutes = require('./routes/publication');
 const userRoutes = require('./routes/user');
 const path = require('path');
 require('dotenv').config();
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: true })) //raw data
 
 app.use('/images', express.static(path.join(__dirname, 'images')));// permet d'acceder aux images
 app.use('/api/profil', profilRoutes);
+app.use('/api/publication', publicationRoutes);
 app.use('/api/auth', userRoutes);
 
 app.use(helmet()); 

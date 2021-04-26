@@ -2,7 +2,7 @@
 "use strict";
 
 const img = document.getElementById('img');
-const firstame = document.getElementById('firstname');
+const firstname = document.getElementById('firstname');
 const lastname = document.getElementById('lastname');
 const email = document.getElementById('email');
 const bio = document.getElementById('bio');

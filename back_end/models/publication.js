@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.Publication.belongsTo(models.User, {
         foreignKey : {
+          name: 'utilisateur_id',
           allowNull: false
         }
       });
