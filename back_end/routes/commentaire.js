@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-const publicationCtrl = require('../controllers/publication');
+const commentaireCtrl = require('../controllers/commentaire');
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 
 
 
-router.post('/', auth, multer, publicationCtrl.creatPublication);
+router.post('/', auth, multer, commentaireCtrl.creatCommentaire);
 
-router.get('/', auth, multer, publicationCtrl.getPublication);
+router.get('/', auth, multer, commentaireCtrl.getCommentaire);
 
 
 module.exports = router;

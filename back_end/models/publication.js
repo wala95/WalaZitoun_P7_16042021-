@@ -17,7 +17,9 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false
         }
       });
-      models.Publication.hasMany(models.Commentaire)
+      models.Publication.hasMany(models.Commentaire, {
+        foreignKey: 'publication_id'
+      })
     }
   };
   Publicationr.init({

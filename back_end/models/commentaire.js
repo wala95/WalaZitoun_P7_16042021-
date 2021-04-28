@@ -13,11 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.Commentaire.belongsTo(models.User, {
         foreignKey : {
+          name: 'utilisateur_id',
           allowNull: false
         }
       });
       models.Commentaire.belongsTo(models.Publication, {
         foreignKey : {
+          name: 'publication_id',
           allowNull: false
         }
       });
@@ -26,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
   Commentaire.init({
     utilisateur_id: DataTypes.INTEGER,
     publication_id: DataTypes.INTEGER,
-    content: DataTypes.STRING,
-    date_time: DataTypes.DATE
+    content: DataTypes.STRING
+  
   }, {
     sequelize,
     modelName: 'Commentaire',
