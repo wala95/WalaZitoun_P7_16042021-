@@ -49,7 +49,7 @@
     <!-- BODY -->
     <main>
 
-        <div class="container mt-5 mb-5">
+        <section class="container mt-5 mb-5">
             <div class="d-flex justify-content-center row">
                 <div class="col-md-8">
                     <div class="d-flex flex-column comment-section">
@@ -58,152 +58,66 @@
                             <div class="d-flex flex-row user-info"><img src="" width="100" height="70" id="img"
                                     class="rounded-circle">
                                 <div class="d-flex flex-column justify-content-start ml-2">
-                                    <span class="d-block font-weight-bold text-danger" id="lastname"></span>
-                                    <span class="d-block font-weight-bold  text-danger" id="firstname"></span>
+                                    <span class="d-block font-weight-bold text-danger" id="name"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="bg-light p-2">
-                            <div class="d-flex flex-row align-items-start"><textarea
-                                    class="form-control ml-1 shadow-none textarea"
-                                    placeholder="Que voulez-vous partager?" id="content" name="publication"></textarea>
+                            <div class="d-flex flex-row align-items-start">
+                                <textarea class="form-control ml-1 shadow-none textarea"placeholder="Que voulez-vous partager?" id="content" name="publication"></textarea>
                             </div>
-                            <input type="file" name="image" class="form-control-file rounded m-1 mt-2"
-                                accept="image/png, image/jpeg, image/jpg, image/gif" id="image">
-
-
-                            <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none"
-                                    type="button" id="btnPartager">Partager</button>
-                                <button class="btn btn-outline-primary btn-sm ml-1 shadow-none"
-                                    type="button">Annuler</button>
+                            <input type="file" name="image" class="form-control-file rounded m-1 mt-2" accept="image/png, image/jpeg, image/jpg, image/gif" id="image">
+                            <div class="mt-2 text-right">
+                                <button class="btn btn-primary btn-sm shadow-none" type="button" id="btnPartager">Partager</button>
+                                <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Annuler</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
 
 
-        <!-- 
-
-        <div class="container mt-5">
-            <div class="d-flex justify-content-center row">
-                <div class="col-md-8">
-                    <div class="d-flex flex-column comment-section">
-                        <div class="bg-white p-2">
-                            <div class="d-flex flex-row user-info"><img class="rounded-circle" id="imgUserPost"
-                                    width="50">
-                                <div class="d-flex flex-column justify-content-start ml-2">
-                                    <span class="d-block font-weight-bold text-danger" id="lastnameUserPost"></span>
-                                    <span class="d-block font-weight-bold  text-danger" id="firstnameUserPost"></span>
-                                    <span class="date text-black-50" id="createdAt"></span>
-                                </div>
-                            </div>
-                            <div class="mt-2">
-                                <div class="d-flex flex-row align-items-start"><img id="imgPost" width="200" src=""
-                                    >
-                                <p class="comment-text" id="contentPost">
-                                </p></div>
-                            </div>
-                        </div>
-                        <div class="bg-white">
-                            <div class="d-flex flex-row fs-12">
-                                <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span
-                                        class="ml-1">Like</span></div>
-                                <div class="disike p-2 cursor"><i class="far fa-thumbs-down"></i><span
-                                        class="ml-1">Dislike</span></div>
-                                <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span
-                                        class="ml-1">Commentaires</span></div>
-                            </div>
-                        </div>
-                        <div class="bg-light p-2">
-                            <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
-                                     width="40"><textarea
-                                    class="form-control ml-1 shadow-none textarea"></textarea></div>
-                            <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none"
-                                    type="button" id="btnCommenter">Commenter</button><button
-                                    class="btn btn-outline-primary btn-sm ml-1 shadow-none"
-                                    type="button">Supprimer</button></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-
-
-
-        <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> -->
-        <div class="container">
+        
+        <section class="container ">
             <div class="row ">
-                <div class="col-md-8 mx-auto">
-                    <div class="post-content">
-                        <!-- <img src="https://via.placeholder.com/400x150/FFB6C1/000000" alt="post-image" class="img-responsive post-image"> -->
-                        <div class="post-container row">
+                <div class="col-md-8 mx-auto post-content " id="publication">
+                    <!-- <div class="post-container row">
                             <div class="col-2">
-                            <img src="" id="imgUserPost" alt="user"
-                                    class="profile-photo-md pull-left rounded-circle" width="100%">
+                                <img src="" id="imgUserPost" alt="user" class="profile-photo-md pull-left rounded-circle" width="100%">
                             </div>
-                            <div class="post-detail col-10">
-                                       
+                            <div class="post-detail col-10">      
                                 <div class="user-info ">
-                                    <!-- <img src="" id="imgUserPost" alt="user"
-                                    class="profile-photo-md pull-left col-3 rounded-circle" width="30" height="80"> -->
-                                    <div class="">
                                     <h6 class="profile-link text-primary" id="nameUserPost"></h6>
-                                    <!-- <h5 class="profile-link text-primary" id="lastnameUserPost"></h5> -->
-                                    <p class="text-muted">Publié à : <span id="createdAt"></span></p>
+                                    <p class="text-muted" id="createdAt"></p>
+                                </div>    
+                                <div class="publication mt-2 d-flex flex-row align-items-start">
+                                    <img id="imgPost" width="200" src="" >
+                                    <p class="comment-text ml-5" id="contentPost"></p>
                                 </div>
+                                <div class="comment  mt-5" id='commentaire'>
+                                    <!-- <div class="commentDiv">
+                                        <img src="" alt="" class="profile-photo-sm col-2" id="imgComment">
+                                        <div class="textDiv col-10">
+                                        <h6 id="userComment"  class="text-primary"></h6>
+                                        <p class="text-muted" id="createdAtComment"></p>
+                                        <p id="contentComment">Lorem ipsum dolor sit amet, consectetur</p>
+                                        </div>
+                                    </div> -->
+                                <!-- </div>
+                                <div class="add-comment bg-light p-2">
+                                    <textarea class="form-control ml-1 shadow-none textarea" id="newComment"></textarea>
+                                    <button class="btn btn-primary btn-sm shadow-none  mt-2 "type="button" id="btnCommenter">Commenter</button>
+                                    <button class="btn btn-outline-primary btn-sm ml-1 shadow-none mt-2 " type="button" id="btnSupprimer">Supprimer</button>
+                             
                                 </div>
-                                <div class="reaction">
-                                    <a class="btn text-green"><i class="fa fa-thumbs-up"></i> 13</a>
-                                    <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
-                                </div>
-                                <div class="line-divider"></div>
-                                <!-- <div class="post-text">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
-                  </div> -->
-                                <div class="publication mt-2 ">
-                                    <div class="d-flex flex-row align-items-start">
-                                        <img id="imgPost" width="200" src="" >
-                                        <p class="comment-text ml-5" id="contentPost"></p>
-                                    </div>
-                                </div>
-                                <div class="line-divider"></div>
-                                <div class="row mt-5">
-                                    <img src="" alt="" class="profile-photo-sm col-2" id="imgComment">
-                                    <div class=" col-10">
-                                    <h6 id="userComment"  class="text-primary"></h6>
-                                    <p class="text-muted">Publié à : <span id="createdAtComment"></span></p>
-                                    <p id="contentComment">Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua. Ut enim ad minim veniam, quis nostrud </p>
-                                </div>
-                                </div>
-                                <!-- <div class="post-comment">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="profile-photo-sm">
-                                    <p><a href="timeline.html" class="profile-link">John</a> Lorem ipsum dolor sit amet,
-                                        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
-                                </div> -->
-                                <div class="bg-light p-2">
-                                    <div >
-                                        <img class="rounded-circle"width="40">
-                                        <textarea class="form-control ml-1 shadow-none textarea"></textarea>
-                                    </div>
-                                    <div class="mt-2 text-right">
-                                        <button class="btn btn-primary btn-sm shadow-none"type="button" id="btnCommenter">Commenter</button>
-                                        <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Supprimer</button>
-                                    </div>
-                                </div>
-
                             </div>
-                        </div>
-                    </div>
+                    </div> --> -->
                 </div>
             </div>
-        </div>
+            
+        </section>
 
 
     </main>
