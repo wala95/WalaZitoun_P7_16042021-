@@ -58,7 +58,7 @@ exports.login = (req, res, next) => { // permettre au utilisateur de se connecte
     .then(user => { 
 // vérifier si on a trouvé un user ou non
       if (!user) { // si user non trouvé
-        return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+        return res.status(401).json({ message: 'Utilisateur non trouvé !' });
       }
       bcrypt.compare(req.body.pw, user.pw) // user trouvé : comparer le MDP avec ceux enregistré dans BD
         .then(valid => {
@@ -67,16 +67,17 @@ exports.login = (req, res, next) => { // permettre au utilisateur de se connecte
           }
           res.status(200).json({ //bon MDP et renvoyer un objet JSON
             userId: user.id,
+            isAdmin: user.isAdmin,
             token: jwt.sign(
               { userId: user.id, 
-                admin: user.admin 
+                isAdmin: user.isAdmin 
               },// identifiant utilisateur
               process.env.SECRET_JWT,// clée secrete pour l'encoudage
               { expiresIn: '24h' }// duréé de token
             )
           });
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => res.status(500).json({ message : error }));
     })
-    .catch(error => res.status(500).json({ error }));// un problème de connexion lié à mongooDB
+    .catch(error => res.status(500).json({ message : error }));// un problème de connexion lié à mysql
 };

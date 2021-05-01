@@ -136,6 +136,8 @@ btnDelete.addEventListener('click', ()=> {
 // Deconnexion
 let btnDeconnexion = document.getElementById('btnDeconnexion');
 btnDeconnexion.addEventListener('click', ()=> {
-  window.location.href = 'inscription.html'
   localStorage.removeItem('user');
+  window.location.href = 'connexion.html'
+
 });
+

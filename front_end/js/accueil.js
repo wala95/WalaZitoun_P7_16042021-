@@ -1,8 +1,16 @@
 "use strict";
+///Récuperer le token avec l'id qui correspondent au user connecté
+const userString = localStorage.getItem('user');
+if(!userString){
+    window.location="connexion.html";
+};
+const userJson = JSON.parse(userString);
+
+
 moment.locale('fr');
 
 const img = document.getElementById('img');
-const name = document.getElementById('name');
+
 
 
 
@@ -16,6 +24,8 @@ const createdAt = document.getElementById('createdAt');
 
 const newComment = document.getElementById('newComment');
 
+
+const btnDeconnexion=document.getElementById("btnDeconnexion");
 // const imgComment= document.getElementById('imgComment');
 // const userComment = document.getElementById('userComment');
 // const contentComment= document.getElementById('contentComment');
@@ -24,9 +34,7 @@ const newComment = document.getElementById('newComment');
 // const imgUserPost = document.getElementById('imgUserPost');
 // const nameUserPost = document.getElementById('nameUserPost');
 
-///Récuperer le token avec l'id qui correspondent au user connecté
-const userString = localStorage.getItem('user');
-const userJson = JSON.parse(userString);
+
 
 const userUrl = `http://127.0.0.1:3000/api/profil/${userJson.id}`;
 const publicationUrl = `http://127.0.0.1:3000/api/publication`;
@@ -64,7 +72,7 @@ function showUserPostZone() {
         // récuperer les informations du user selectionné
         .then(data => {
             img.src = data.img;
-            name.textContent = data.firstname + ' ' + data.lastname;
+           
 
         })
         .catch(erreurCatche => console.log(`il y a une erreur ${erreurCatche.message}`));
@@ -115,8 +123,6 @@ function sendToServerPublication() {
     })
         .then(() => {
             document.location.reload();
-            //aller vers la page confirmation.fr
-            //   window.location.href = 'connexion.html'
         })
         .catch(error => {
             console.log(error);
@@ -125,7 +131,7 @@ function sendToServerPublication() {
 
 
 // creer les post avec les comentaires
-function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, postId) {
+function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, postId, postUserId) {
 
 
     let imageUserPostDiv = document.createElement('div');
@@ -147,12 +153,17 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
     newNameUserPost.textContent = nameUserPost;
     newNameUserPost.classList.add("profile-link", "text-primary", "col-7", "m-0")
 
+
+
     let deletePost = document.createElement('button');
     deletePost.textContent = "Supprimer";
     deletePost.setAttribute('type', 'button');
     deletePost.setAttribute('id', 'deletePost');
     deletePost.classList.add("btn", "btn-white", "text-secondary", "btn-sm", "col-3", "p-0");
     deletePost.setAttribute('onclick', `deletePublication(${postId})`);
+
+
+
 
     let updatePost = document.createElement('button');
     updatePost.textContent = "Modifier";
@@ -169,8 +180,10 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
 
 
     userInfoPostDiv.appendChild(newNameUserPost);
+    if(userJson.id == postUserId || userJson.isAdmin){
     userInfoPostDiv.appendChild(deletePost);
     userInfoPostDiv.appendChild(updatePost);
+    }
     userInfoPostDiv.appendChild(newCreatedAt);
 
     let publicationDiv = document.createElement('div');
@@ -270,7 +283,7 @@ function showAllPublications() {
         .then(posts => {
             let publication = document.getElementById("publication")
             for (let post of posts) {
-                let { postDiv, commentDiv } = creatPost(post.User.img, post.User.firstname + ' ' + post.User.lastname, post.createdAt, post.image, post.content, post.id);
+                let { postDiv, commentDiv } = creatPost(post.User.img, post.User.firstname + ' ' + post.User.lastname, post.createdAt, post.image, post.content, post.id, post.User.id);
                 showAllCommentaires(commentDiv, post.Commentaires)
                 publication.appendChild(postDiv);
             }
@@ -326,7 +339,7 @@ function sendToServerCommentaire(id, idTextArea) {
 
 
 // creer la liste des comentaires
-function createComment(img, user, createdAt, content, commentId) {
+function createComment(img, user, createdAt, content, commentId, commentUserId) {
 
     let imgComment = document.createElement('img');
     imgComment.src = img;
@@ -352,7 +365,9 @@ function createComment(img, user, createdAt, content, commentId) {
     ContentComment.classList.add("xxcc");
     textDiv.appendChild(userComment);
     textDiv.appendChild(createdAtComment);
+    if(userJson.id == commentUserId || userJson.isAdmin){
     textDiv.appendChild(deleteComment);
+    }
     textDiv.appendChild(ContentComment);
 
 
@@ -366,7 +381,7 @@ function createComment(img, user, createdAt, content, commentId) {
 // envoyer une requette GET à l'API(web service) pour récupérer les données des commentaires
 function showAllCommentaires(commentDiv, comments) {
     for (let comment of comments) {
-        let wala = createComment(comment.User.img, comment.User.firstname + ' ' + comment.User.lastname, comment.createdAt, comment.content, comment.id);
+        let wala = createComment(comment.User.img, comment.User.firstname + ' ' + comment.User.lastname, comment.createdAt, comment.content, comment.id, comment.User.id);
         commentDiv.appendChild(wala);
     }
 }
@@ -439,3 +454,10 @@ var loadFile = function(event) {
     image.setAttribute("width", "200");
     image.setAttribute("height", "200");
 };
+
+
+//déconnexion 
+btnDeconnexion.addEventListener('click', () => {
+   localStorage.removeItem('user')
+   window.location='connexion.html';
+});

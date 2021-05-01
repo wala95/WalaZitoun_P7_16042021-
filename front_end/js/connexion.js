@@ -2,10 +2,13 @@
 let email =  document.getElementById("email");
 let pw = document.getElementById("pw");
 
+const errorDiv = document.getElementById('error')
+
 
 //  Envoyer les valeurs du formulaire a l'api
 
 let loginUrl = `http://127.0.0.1:3000/api/auth/login`;
+
 
 function sendToServer(){
 
@@ -22,25 +25,24 @@ let data = {
     },
     body : JSON.stringify(data)
   })
-  .then(response => {
-      if (response.ok == true) {
-        return response;
-      }else {
-        console.log(response);
-        throw new Error("la reponse du serveur n'est pas 200");
-      }
-    })
-  .then(res => res.json())
+  .then(response => response.json()
+        .then((json) => {
+            if (!response.ok) {
+              return Promise.reject(json.message);
+            }
+            return json;
+    }))
   .then(data => {//envoyer le token et l'user id dans le local.storage
       localStorage.setItem('user', JSON.stringify({
           id : data.userId,
           token : data.token, 
+          isAdmin : data.isAdmin
         }));
        //aller vers la page profil
       window.location.href = 'accueil.html'
     })
     .catch(error => {
-        console.log(error);
+      errorDiv.textContent = error
     });
 };
 

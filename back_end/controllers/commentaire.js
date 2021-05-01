@@ -20,14 +20,29 @@ exports.creatCommentaire = (req, res) => {// création d'un nouveau commentaire
 };
 
 exports.deleteCommentaire = (req, res, next) => {
-    Commentaire.findOne({
-        where: {
-          id: req.params.id
-        }
-      })
-        .then(commentaire => {
+
+  let findPromise = null;
+
+  if (res.locals.isAdmin) {
+    findPromise =   Commentaire.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+  }else{
+    findPromise = Commentaire.findOne({
+      where: {
+        id: req.params.id,
+        utilisateur_id : res.locals.userId
+      }
+    });
+  }
+
+
+  
+  findPromise.then(commentaire => {
           if (!commentaire) { // si user non trouvé
-            return res.status(401).json({ error: 'Commentaire non trouvé !' });
+            return res.status(401).json({ error: 'Commentaire non trouvé pour cet utilisateur!' });
           }
           Commentaire.destroy({
             where: {

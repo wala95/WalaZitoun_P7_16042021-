@@ -56,39 +56,53 @@ exports.getPublication = (req, res, next) => {
     );
 };
 exports.deletePublication = (req, res) => {
-  Publication.findOne({
-    where: {
-      id: req.params.id
-    }
-  })
-    .then(publication => {
-      if (!publication) { // si user non trouvé
-        return res.status(401).json({ error: 'Publication non trouvé !' });
+  let findPromise = null;
+
+  if (res.locals.isAdmin) {
+    findPromise = Publication.findOne({
+      where: {
+        id: req.params.id
       }
-      let image = publication.image;
-      Publication.destroy({
-        where: {
-          id: req.params.id
-        }
-      }).then(() => {
-        if (image) {
-          const filename = image.split('/images/')[1];
-          //supprime l'image depuis le disk dure apres avoir supprimé le post depuis la BDD
-          fs.unlink(`images/${filename}`, err => {
-            if (err) {
-              res.status(500).json({ "error": "Publication supprimé mais impossible de supprimer son image" });
-            } else {
-              res.status(200).json({ message: 'Publication supprimé!' });
-            }
-          });
-        } else {
-          res.status(200).json({ message: 'Publication supprimé!' });
-        }
-      }).catch(error => {
-        console.log('erreur', error);
-        res.status(400).json({ "error": error });
-      });
-    })
+    });
+  } else {
+    findPromise = Publication.findOne({
+      where: {
+        id: req.params.id,
+        utilisateur_id: res.locals.userId
+      }
+    });
+  }
+  //is admin
+
+
+  findPromise.then(publication => {
+    if (!publication) { // si user non trouvé
+      return res.status(401).json({ error: 'Publication non trouvé pour cet utilisateur!' });
+    }
+    let image = publication.image;
+    Publication.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(() => {
+      if (image) {
+        const filename = image.split('/images/')[1];
+        //supprime l'image depuis le disk dure apres avoir supprimé le post depuis la BDD
+        fs.unlink(`images/${filename}`, err => {
+          if (err) {
+            res.status(500).json({ "error": "Publication supprimé mais impossible de supprimer son image" });
+          } else {
+            res.status(200).json({ message: 'Publication supprimé!' });
+          }
+        });
+      } else {
+        res.status(200).json({ message: 'Publication supprimé!' });
+      }
+    }).catch(error => {
+      console.log('erreur', error);
+      res.status(400).json({ "error": error });
+    });
+  })
     .catch(error => {
       console.log('erreur', error)
       res.status(500).json({ "error": error });
