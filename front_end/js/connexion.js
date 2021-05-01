@@ -37,7 +37,7 @@ let data = {
           token : data.token, 
         }));
        //aller vers la page profil
-      window.location.href = 'profil.html'
+      window.location.href = 'accueil.html'
     })
     .catch(error => {
         console.log(error);

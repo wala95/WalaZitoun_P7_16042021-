@@ -16,13 +16,13 @@ module.exports = (sequelize, DataTypes) => {
           name: 'utilisateur_id',
           allowNull: false
         }
-      });
+      },  {onDelete: 'CASCADE' });
       models.Commentaire.belongsTo(models.Publication, {
         foreignKey : {
           name: 'publication_id',
           allowNull: false
         }
-      });
+      }, {onDelete: 'CASCADE' });
     }
   };
   Commentaire.init({

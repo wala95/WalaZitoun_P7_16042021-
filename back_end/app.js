@@ -1,22 +1,11 @@
 const express = require('express');
-const { Sequelize } = require('sequelize');;// driver(api) qui permet de communiquer avec la base de données mongooDB
+require('dotenv').config();
 const profilRoutes = require('./routes/profil');
 const publicationRoutes = require('./routes/publication');
 const commentaireRoutes = require('./routes/commentaire');
 const userRoutes = require('./routes/user');
 const path = require('path');
-require('dotenv').config();
 const helmet = require('helmet');
-
-// ouvrir une connection sur la bdd
-const sequelize = new Sequelize('mysql://root:asta8firoallah@localhost:3306/socialmedia') 
-
-try {
-   sequelize.authenticate();
-  console.log('Connection has been established successfully.');
-} catch (error) {
-  console.error('Unable to connect to the database:', error);
-};
 
 const app = express();
 // mettre le serveur a l'écoute de touts types de requettes qui vient du navigateur

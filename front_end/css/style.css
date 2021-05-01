@@ -1,6 +1,7 @@
 body {
 position: relative;
 
+
 }
 body::before {
   position: absolute;
@@ -14,6 +15,7 @@ body::before {
   opacity: 0.2;
   content: "";
   z-index: -1;
+
 }
 nav, footer {
   background-color: #03224c;
@@ -31,6 +33,12 @@ li {
   margin: 13.5px;
 }
 
+.inscription {
+
+  background: rgb(242, 242, 242);
+  /* color: rgb(9, 9, 150); */
+    color: rgb(9, 9, 150);
+}
 
 
 

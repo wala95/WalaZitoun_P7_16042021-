@@ -68,8 +68,10 @@ exports.login = (req, res, next) => { // permettre au utilisateur de se connecte
           res.status(200).json({ //bon MDP et renvoyer un objet JSON
             userId: user.id,
             token: jwt.sign(
-              { userId: user.id },// identifiant utilisateur
-              'RANDOM_TOKEN_SECRET',// clée secrete pour l'encoudage
+              { userId: user.id, 
+                admin: user.admin 
+              },// identifiant utilisateur
+              process.env.SECRET_JWT,// clée secrete pour l'encoudage
               { expiresIn: '24h' }// duréé de token
             )
           });

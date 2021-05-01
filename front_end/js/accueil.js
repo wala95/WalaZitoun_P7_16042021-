@@ -1,20 +1,20 @@
-
 "use strict";
+moment.locale('fr');
 
 const img = document.getElementById('img');
 const name = document.getElementById('name');
 
 
 
-const image = document.getElementById('image');
+const image = document.getElementById('newImg');
 const content = document.getElementById('content');
 
 
-const imgPost= document.getElementById('imgPost');
-const contentPost= document.getElementById('contentPost');
-const createdAt= document.getElementById('createdAt');
+const imgPost = document.getElementById('imgPost');
+const contentPost = document.getElementById('contentPost');
+const createdAt = document.getElementById('createdAt');
 
-const newComment= document.getElementById('newComment');
+const newComment = document.getElementById('newComment');
 
 // const imgComment= document.getElementById('imgComment');
 // const userComment = document.getElementById('userComment');
@@ -39,93 +39,93 @@ const commentaireUrl = `http://127.0.0.1:3000/api/commentaire`;
 
 showUserPostZone();
 showAllPublications();
-showAllCommentaires();
 
 // envoyer une requette GET à l'API(web service) pour récupérer les données de l'utlisateur
 function showUserPostZone() {
     fetch(userUrl, {
         headers: {
-          'Authorization': `bearer ${userJson.token}`,
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+            'Authorization': `bearer ${userJson.token}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         }
-      })
+    })
         .then(response => {
-          if (response.ok == true) {
-            return response;
-          }
-          else {
-            throw new Error("la reponse du serveur n'est pas 200");
-          }
+            if (response.ok == true) {
+                return response;
+            }
+            else {
+                throw new Error("la reponse du serveur n'est pas 200");
+            }
         })
         //  consommer la promesse et retourner uniquement son body sous format json
         .then(response => response.json())
-      
+
         // consommer la promesse précédente pour: 
-          // récuperer les informations du user selectionné
+        // récuperer les informations du user selectionné
         .then(data => {
-          img.src = data.img;
-          name.textContent = data.firstname +' '+ data.lastname;
-      
+            img.src = data.img;
+            name.textContent = data.firstname + ' ' + data.lastname;
+
         })
-        .catch(erreurCatche => console.log(`il y a une erreur ${erreurCatche.message}`));      
+        .catch(erreurCatche => console.log(`il y a une erreur ${erreurCatche.message}`));
+    let btnPartager = document.getElementById('btnPartager');
+    btnPartager.addEventListener('click', () => {
+        sendToServerPublication()
+    });
 }
 
 //  Envoyer les valeurs de la publication a l'api
 function sendToServerPublication() {
-  let promiseFetch = null;
-  if (!image.files || image.files[0] == null) {
-    let data = {
-      content: content.value,
-      utilisateur_id : userJson.id
-    };
-    promiseFetch = fetch( publicationUrl, {
-      method: 'post',
-      headers: {
-        'Authorization': `bearer ${userJson.token}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-  } else {
-    let formData = new FormData();
-    formData.append("image", image.files[0]);
-    formData.append("content", content.value);
-    formData.append("utilisateur_id", userJson.id);
-
-    promiseFetch = fetch( publicationUrl, {
-      method: 'post',
-      headers : {
-        'Authorization': `bearer ${userJson.token}`
-      },
-      body: formData
-    });
-  }
-  promiseFetch.then(response => {
-    if (response.ok == true) {
-      return response;
+    let promiseFetch = null;
+    if (!image.files || image.files[0] == null) {
+        let data = {
+            content: content.value,
+            utilisateur_id: userJson.id
+        };
+        promiseFetch = fetch(publicationUrl, {
+            method: 'post',
+            headers: {
+                'Authorization': `bearer ${userJson.token}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
     } else {
-      console.log(response);
-      throw new Error("la reponse du serveur n'est pas 200");
+        let formData = new FormData();
+        formData.append("image", image.files[0]);
+        formData.append("content", content.value);
+        formData.append("utilisateur_id", userJson.id);
+
+        promiseFetch = fetch(publicationUrl, {
+            method: 'post',
+            headers: {
+                'Authorization': `bearer ${userJson.token}`
+            },
+            body: formData
+        });
     }
-  })
-    .then(() => {
-        alert('publication créée avec succès!');
-      //aller vers la page confirmation.fr
-    //   window.location.href = 'connexion.html'
+    promiseFetch.then(response => {
+        if (response.ok == true) {
+            return response;
+        } else {
+            console.log(response);
+            throw new Error("la reponse du serveur n'est pas 200");
+        }
     })
-    .catch(error => {
-      console.log(error);
-    });
+        .then(() => {
+            document.location.reload();
+            //aller vers la page confirmation.fr
+            //   window.location.href = 'connexion.html'
+        })
+        .catch(error => {
+            console.log(error);
+        });
 }
-let btnPartager = document.getElementById('btnPartager');
-btnPartager.addEventListener('click', () => {
-    sendToServerPublication()
-});
+
 
 // creer les post avec les comentaires
-function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, ) {
+function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, postId) {
 
 
     let imageUserPostDiv = document.createElement('div');
@@ -137,35 +137,61 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, )
 
     imageUserPostDiv.appendChild(newImageUserPost);
 
-
-
+    let userInfoPostDiv = document.createElement('div');
+    userInfoPostDiv.classList.add("user-info", "row");
 
     let postDetailDiv = document.createElement('div');
     postDetailDiv.classList.add("post-detail", "col-10");
 
-
-    let userInfoPostDiv = document.createElement('div');
-    userInfoPostDiv.classList.add("user-info");
     let newNameUserPost = document.createElement('h6');
     newNameUserPost.textContent = nameUserPost;
-    newNameUserPost.classList.add("profile-link", "text-primary")
+    newNameUserPost.classList.add("profile-link", "text-primary", "col-7", "m-0")
+
+    let deletePost = document.createElement('button');
+    deletePost.textContent = "Supprimer";
+    deletePost.setAttribute('type', 'button');
+    deletePost.setAttribute('id', 'deletePost');
+    deletePost.classList.add("btn", "btn-white", "text-secondary", "btn-sm", "col-3", "p-0");
+    deletePost.setAttribute('onclick', `deletePublication(${postId})`);
+
+    let updatePost = document.createElement('button');
+    updatePost.textContent = "Modifier";
+    updatePost.setAttribute('type', 'button');
+    updatePost.setAttribute('id', 'updatePost');
+    updatePost.classList.add("btn", "btn-white", "text-secondary", "btn-sm", "col-2", "p-0");
+    // updateComment.setAttribute('onclick', `sendToServerCommentaire(${postId}, 'commentPost_${postId}')`);
+
+
     let newCreatedAt = document.createElement('p');
-    newCreatedAt.textContent = createdAt;
-    newCreatedAt.classList.add("text-muted");
+    newCreatedAt.textContent = moment(createdAt).fromNow();
+    newCreatedAt.classList.add("text-muted", "col-12");
+
+
+
     userInfoPostDiv.appendChild(newNameUserPost);
+    userInfoPostDiv.appendChild(deletePost);
+    userInfoPostDiv.appendChild(updatePost);
     userInfoPostDiv.appendChild(newCreatedAt);
 
     let publicationDiv = document.createElement('div');
-    publicationDiv.classList.add("publication", "mt-2", "d-flex", "flex-row", "align-items-start");
-    let newImgPost = document.createElement('img');
-    newImgPost.src = imgPost;
-    newImgPost.setAttribute( "width", "200");
-    newImgPost.classList.add();
-   let newContentPost = document.createElement('p');
-   newContentPost.textContent = createdAt;
-   newContentPost.classList.add("comment-text", "ml-5");
-    publicationDiv.appendChild(newImgPost);
+    publicationDiv.classList.add("publication", "mt-2");
+
+
+
+
+
+    let newContentPost = document.createElement('p');
+    newContentPost.textContent = contentPost;
+    newContentPost.classList.add("comment-text");
+
     publicationDiv.appendChild(newContentPost);
+
+    if (imgPost) {
+        let newImgPost = document.createElement('img');
+        newImgPost.src = imgPost;
+        newImgPost.setAttribute("width", "70%");
+        publicationDiv.appendChild(newImgPost);
+    }
 
 
 
@@ -173,28 +199,38 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, )
 
     let commentDiv = document.createElement('div');
     commentDiv.classList.add("comment", "mt-5");
-    commentDiv.setAttribute("id", "commentaire")
 
 
 
     let addCommentDiv = document.createElement('div');
-    addCommentDiv.classList.add("add-comment", "bg-light", "p-2");
-    let textarea= document.createElement('textarea');
-    textarea.classList.add("form-control" ,"ml-1", "shadow-none", "textarea");
-   let btnCommenter = document.createElement('button');
-   btnCommenter.textContent = "Commenter";
-   btnCommenter.setAttribute('type', 'button');
-   btnCommenter.classList.add("btn", "btn-primary", "btn-sm", "shadow-none",  "mt-2");
-    let btnSupprimer = document.createElement('button');
-    btnSupprimer.textContent = "Supprimer";
-    btnSupprimer.setAttribute('type', 'button');
-    btnSupprimer.classList.add("btn", "btn-outline-primary", "btn-sm", "ml-1", "shadow-none", "mt-2"); 
+    addCommentDiv.classList.add("add-comment", "p-2", "text-right");
+    let textarea = document.createElement('textarea');
+    textarea.classList.add("form-control", "ml-1", "shadow-none", "textarea", "col-10");
+    textarea.setAttribute("placeholder", `Ecrivez un commentaire`);
+    textarea.setAttribute("id", `commentPost_${postId}`);
+
+    let btnCommenter = document.createElement('button');
+    btnCommenter.textContent = "Commenter";
+    btnCommenter.setAttribute('type', 'button');
+    btnCommenter.setAttribute('id', 'btnCommenter');
+    btnCommenter.classList.add("btn", "btn-primary", "btn-sm", "shadow-none", "mt-2");
+    btnCommenter.setAttribute('onclick', `sendToServerCommentaire(${postId}, 'commentPost_${postId}')`);
+
+
+
+    let btnAnnuler = document.createElement('button');
+    btnAnnuler.textContent = "Annuler";
+    btnCommenter.setAttribute('id', 'btnAnnulerPost');
+    btnAnnuler.setAttribute('type', 'button');
+    btnAnnuler.classList.add("btn", "btn-outline-primary", "btn-sm", "ml-1", "shadow-none", "mt-2");
+
+
     addCommentDiv.appendChild(textarea);
     addCommentDiv.appendChild(btnCommenter);
-    addCommentDiv.appendChild(btnSupprimer);
+    addCommentDiv.appendChild(btnAnnuler);
 
 
-    
+
     postDetailDiv.appendChild(userInfoPostDiv);
     postDetailDiv.appendChild(publicationDiv);
     postDetailDiv.appendChild(commentDiv);
@@ -206,119 +242,118 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, )
     postcontainerDiv.appendChild(imageUserPostDiv);
     postcontainerDiv.appendChild(postDetailDiv);
 
-    return postcontainerDiv;
-  }
+    return { postDiv: postcontainerDiv, commentDiv: commentDiv };
+}
 
 
 // envoyer une requette GET à l'API(web service) pour récupérer les données des publication 
 function showAllPublications() {
-    let btnCommenter = document.getElementById('btnCommenter');
-fetch( publicationUrl, {
-      headers: {
-        'Authorization': `bearer ${userJson.token}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
+    fetch(publicationUrl, {
+        headers: {
+            'Authorization': `bearer ${userJson.token}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
     })
-   .then(response => {
-    if (response.ok == true) {
-      return response;
-    } else {
-      console.log(response);
-      throw new Error("la reponse du serveur n'est pas 200");
-    }
-  })
-    //  consommer la promesse et retourner uniquement son body sous format json
-    .then(response => response.json())
-  
-      // récuperer les informations de la publication selectionné
-      .then(posts => {
-        let publication = document.getElementById("publication")
-        for (let post of posts) {
-            let dhia = creatPost(post.User.img, post.User.firstname +' '+ post.User.lastname, post.createdAt, post.image, post.content);
-            console.log(dhia)
-            publication.appendChild(dhia);
-          }
+        .then(response => {
+            if (response.ok == true) {
+                return response;
+            } else {
+                console.log(response);
+                throw new Error("la reponse du serveur n'est pas 200");
+            }
+        })
+        //  consommer la promesse et retourner uniquement son body sous format json
+        .then(response => response.json())
+
+        // récuperer les informations de la publication selectionné
+        .then(posts => {
+            let publication = document.getElementById("publication")
+            for (let post of posts) {
+                let { postDiv, commentDiv } = creatPost(post.User.img, post.User.firstname + ' ' + post.User.lastname, post.createdAt, post.image, post.content, post.id);
+                showAllCommentaires(commentDiv, post.Commentaires)
+                publication.appendChild(postDiv);
+            }
 
 
-
-    //   .then(data => {
-    //   console.log(data);
-    //   imgPost.src = data[0].image;
-    //   contentPost.textContent = data[0].content;
-    //   createdAt.textContent = data[0].createdAt;
-  
-    //   nameUserPost.textContent = data[0].User.firstname +' '+ data[0].User.lastname;
-          //   lastnameUserPost.textContent = data[0].User.lastname;
-  
-      btnCommenter.setAttribute('onclick', `sendToServerCommentaire(${data[0].id})`);
-    })
-    .catch(erreurCatche => console.log(`il y a une erreur ${erreurCatche.message}`));
+        })
+        .catch(erreurCatche => console.log(`il y a une erreur ${erreurCatche.message}`));
 }
 
 
 
 
 
+//  Envoyer les valeurs du commentaire a l'api
+function sendToServerCommentaire(id, idTextArea) {
 
+    let content = document.getElementById(idTextArea).value;
 
-  //  Envoyer les valeurs du commentaire a l'api
-  function sendToServerCommentaire(id) {
-      let data = {
-        content: newComment.value,
-        utilisateur_id : userJson.id, // vient de localstorage 
-        publication_id : id
-      };
-    fetch( commentaireUrl, {
+    let data = {
+        content: content,
+        utilisateur_id: userJson.id, // vient de localstorage 
+        publication_id: id
+    };
+    fetch(commentaireUrl, {
         method: 'post',
         headers: {
-          'Authorization': `bearer ${userJson.token}`,
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+            'Authorization': `bearer ${userJson.token}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-      })
-    
-    .then(response => {
-      if (response.ok == true) {
-        return response;
-      } else {
-        console.log(response);
-        throw new Error("la reponse du serveur n'est pas 200");
-      }
     })
-      .then(() => {
-          alert('commentaire créée avec succès!');
-        //aller vers la page confirmation.fr
-      //   window.location.href = 'connexion.html'
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
+
+        .then(response => {
+            if (response.ok == true) {
+                return response;
+            } else {
+                console.log(response);
+                throw new Error("la reponse du serveur n'est pas 200");
+            }
+        })
+        .then(() => {
+            document.location.reload();
+            //aller vers la page confirmation.fr
+            //   window.location.href = 'connexion.html'
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+
+
 
 // creer la liste des comentaires
-function creatComment(img, user,createdAt, content) {
+function createComment(img, user, createdAt, content, commentId) {
 
     let imgComment = document.createElement('img');
     imgComment.src = img;
-    imgComment.classList.add("profile-photo-sm", "col-2");
+    imgComment.classList.add("profile-photo-sm", "col-2", "mr-3");
 
 
     let textDiv = document.createElement('div');
-    textDiv.classList.add("col-10");
+    textDiv.classList.add("col-10", "row", "textDiv", "rounded", "mb-2", "p-2");
     let userComment = document.createElement('h6');
     userComment.textContent = user;
-    userComment.classList.add("text-primary")
+    userComment.classList.add("text-primary", "col-4", "p-0")
     let createdAtComment = document.createElement('p');
-    createdAtComment.textContent = createdAt;
-    createdAtComment.classList.add("text-muted");
-    let Contentcomment = document.createElement('p');
-    Contentcomment.textContent = content;
-    Contentcomment.classList.add("xxcc");
+    createdAtComment.textContent = moment(createdAt).fromNow();
+    createdAtComment.classList.add("text-muted", "col-5", "p-0");
+    let deleteComment = document.createElement('button');
+    deleteComment.textContent = "Supprimer";
+    deleteComment.setAttribute('type', 'button');
+    deleteComment.setAttribute('id', 'deleteComment');
+    deleteComment.classList.add("btn", "btn-sm", "mb-2", "col-3");
+    deleteComment.setAttribute('onclick', `deleteCommentaire(${commentId})`);
+    let ContentComment = document.createElement('p');
+    ContentComment.textContent = content;
+    ContentComment.classList.add("xxcc");
     textDiv.appendChild(userComment);
     textDiv.appendChild(createdAtComment);
-    textDiv.appendChild(Contentcomment);
+    textDiv.appendChild(deleteComment);
+    textDiv.appendChild(ContentComment);
 
 
     let commentDiv = document.createElement('div');
@@ -327,52 +362,80 @@ function creatComment(img, user,createdAt, content) {
     commentDiv.appendChild(textDiv);
 
     return commentDiv;
-  }
- // envoyer une requette GET à l'API(web service) pour récupérer les données des commentaires
-  function showAllCommentaires() {
-   
-fetch( publicationUrl, {
-      headers: {
-        'Authorization': `bearer ${userJson.token}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-   .then(response => {
-    if (response.ok == true) {
-      return response;
-    } else {
-      console.log(response);
-      throw new Error("la reponse du serveur n'est pas 200");
+}
+// envoyer une requette GET à l'API(web service) pour récupérer les données des commentaires
+function showAllCommentaires(commentDiv, comments) {
+    for (let comment of comments) {
+        let wala = createComment(comment.User.img, comment.User.firstname + ' ' + comment.User.lastname, comment.createdAt, comment.content, comment.id);
+        commentDiv.appendChild(wala);
     }
-  })
-    //  consommer la promesse et retourner uniquement son body sous format json
-    .then(response => response.json())
-  
-      // récuperer les informations de la publication selectionné
-    .then(comments => {
-        let commentaire = document.getElementById("commentaire")
-        for (let comment of comments) {
-            let wala = creatComment(comment.User.img, comment.User.firstname +' '+ comment.User.lastname, comment.createdAt, comment.content);
-            console.log(wala)
-            commentaire.appendChild(wala);
-          }
-
-    //   userComment.textContent = data[0].User.firstname + data[0].User.lastname;
-    //   imgComment.src = data[0].image;
-    //   contentComment.textContent = data[0].content;
-    //   createdAtComment.textContent = data[0].createdAt;
-
-
-    })
-    .catch(erreurCatche => console.log(`il y a une erreur ${erreurCatche}`));
 }
 
 
 
 
 
+//  supprimer une publication
+function deletePublication(id) {
+
+    fetch(publicationUrl + `/${id}`, {
+        method: 'delete',
+        headers: {
+            'Authorization': `bearer ${userJson.token}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (response.ok == true) {
+                return response;
+            }
+            else {
+                console.log(response);
+                throw new Error("la reponse du serveur n'est pas 200");
+            }
+        })
+        .then(() => {
+            document.location.reload();
+
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
 
 
+function deleteCommentaire(id) {
 
+    fetch(commentaireUrl + `/${id}`, {
+        method: 'delete',
+        headers: {
+            'Authorization': `bearer ${userJson.token}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (response.ok == true) {
+                return response;
+            }
+            else {
+                console.log(response);
+                throw new Error("la reponse du serveur n'est pas 200");
+            }
+        })
+        .then(() => {
+            document.location.reload();
 
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+var loadFile = function(event) {
+	var image = document.getElementById('imgPreview');
+	image.src = URL.createObjectURL(event.target.files[0]);
+    image.setAttribute("width", "200");
+    image.setAttribute("height", "200");
+};

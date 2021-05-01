@@ -49,28 +49,30 @@
     <!-- BODY -->
     <main>
 
-        <section class="container mt-5 mb-5">
-            <div class="d-flex justify-content-center row">
-                <div class="col-md-8">
-                    <div class="d-flex flex-column comment-section">
-                        <div class="bg-white p-2">
-                            <h4 class="text-center">Créer une publication</h4>
-                            <div class="d-flex flex-row user-info"><img src="" width="100" height="70" id="img"
-                                    class="rounded-circle">
-                                <div class="d-flex flex-column justify-content-start ml-2">
-                                    <span class="d-block font-weight-bold text-danger" id="name"></span>
-                                </div>
+        <section class="container mt-5 mb-3">
+            <div class=" d-flex justify-content-center row">
+                <div class=" col-md-8">
+                    <div class="bg-white rounded d-flex flex-column comment-section">
+                        <div class=" pt-4 pl-4 pr-4">
+                            <div class="d-flex flex-row user-info">
+                                <img src="" width="100" height="70" id="img" class="rounded-circle pr-2">
+                                <textarea class="form-control ml-1 shadow-none textarea "placeholder="Que voulez-vous partager?" id="content" name="publication" ></textarea>
                             </div>
-                        </div>
-                        <div class="bg-light p-2">
-                            <div class="d-flex flex-row align-items-start">
-                                <textarea class="form-control ml-1 shadow-none textarea"placeholder="Que voulez-vous partager?" id="content" name="publication"></textarea>
-                            </div>
-                            <input type="file" name="image" class="form-control-file rounded m-1 mt-2" accept="image/png, image/jpeg, image/jpg, image/gif" id="image">
-                            <div class="mt-2 text-right">
-                                <button class="btn btn-primary btn-sm shadow-none" type="button" id="btnPartager">Partager</button>
-                                <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Annuler</button>
-                            </div>
+                         </div>
+                         
+                        <div class=" pb-3">
+                            <hr> 
+                            <div class=" mx-auto ">
+                                 <img id="imgPreview" style="cursor: pointer;"/>
+                                 <input type="file" name="image" onchange="loadFile(event)"   accept="image/png, image/jpeg, image/jpg" id="newImg" style="display:none">
+                            </div> 
+                            
+                            <div class="ml-5">
+                                <button for="img" class=" col-6 btn-light text-center text-secondary " style="cursor: pointer;" onclick="document.getElementById('newImg').click()">Choisir une image  <i class="fas fa-image"></i></button>
+                                <button class="col-5 btn-primary shadow-none " type="button" id="btnPartager">Partager <i class="fas fa-share"></i></button>
+                             </div>
+                       
+
                         </div>
                     </div>
                 </div>
@@ -97,7 +99,7 @@
                                     <p class="comment-text ml-5" id="contentPost"></p>
                                 </div>
                                 <div class="comment  mt-5" id='commentaire'>
-                                    <!-- <div class="commentDiv">
+                                    <div class="commentDiv">
                                         <img src="" alt="" class="profile-photo-sm col-2" id="imgComment">
                                         <div class="textDiv col-10">
                                         <h6 id="userComment"  class="text-primary"></h6>
@@ -113,7 +115,7 @@
                              
                                 </div>
                             </div>
-                    </div> --> -->
+                    </div> --> 
                 </div>
             </div>
             
@@ -162,6 +164,7 @@
             </div>
         </div>
     </footer>
+    <script src="./js/moment.min.js" defer></script>
     <script src="./js/accueil.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
