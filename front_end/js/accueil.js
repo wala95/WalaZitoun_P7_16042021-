@@ -183,7 +183,7 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
 
 
     let imageUserPostDiv = document.createElement('div');
-    imageUserPostDiv.classList.add("col-1", "p-0");
+    imageUserPostDiv.classList.add("col-2", "p-0");
 
     let newImageUserPost = document.createElement('img');
     newImageUserPost.src = imgUserPost;
@@ -198,11 +198,11 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
     userInfoPostDiv.classList.add("user-info", "row");
 
     let postDetailDiv = document.createElement('div');
-    postDetailDiv.classList.add("post-detail", "col-11");
+    postDetailDiv.classList.add("post-detail", "col-10");
 
     let newNameUserPost = document.createElement('a');
     newNameUserPost.textContent = nameUserPost;
-    newNameUserPost.classList.add("profile-link", "text-primary", "col-10", "m-0")
+    newNameUserPost.classList.add("profile-link", "textBleu", "col-8", "m-0")
     if (userJson.id == postUserId) {
         newNameUserPost.setAttribute('href', "profil.html");
     }
@@ -399,7 +399,7 @@ function createComment(img, user, createdAt, content, commentId, commentUserId) 
 
     let userComment = document.createElement('a');
     userComment.textContent = user;
-    userComment.classList.add("text-primary", "p-0","col-5")
+    userComment.classList.add("textBleu", "p-0","col-5")
     if (userJson.id == commentUserId) {
         userComment.setAttribute('href', "profil.html");
     }
