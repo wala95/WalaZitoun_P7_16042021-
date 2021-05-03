@@ -3,12 +3,11 @@ const Commentaire = models.Commentaire;
 
 
 exports.creatCommentaire = (req, res) => {// création d'un nouveau commentaire
-  let utilisateur_id = req.body.utilisateur_id;
   let publication_id = req.body.publication_id;
   let content = req.body.content;
   
   const commentaire = Commentaire.create({
-    utilisateur_id: utilisateur_id,
+    utilisateur_id: res.locals.userId,
     publication_id: publication_id,
     content: content,
   })// enregistrer la nouvelle publication dans la BDD

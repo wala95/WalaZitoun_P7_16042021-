@@ -6,8 +6,6 @@ const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 
 
-
-
 router.get('/:id', auth, sauceCtrl.getProfil);
 
 router.put('/:id', auth, multer, sauceCtrl.modifyProfil);

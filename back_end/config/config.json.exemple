@@ -1,0 +1,9 @@
+{
+    "development": {
+      "username": "MY_SQL_USER_NAME",
+      "password": "MY_SQL_PWD",
+      "database": "MY_SQL_BDD",
+      "host": "MY_SQL_HOST",
+      "dialect": "mysql"
+    }
+}

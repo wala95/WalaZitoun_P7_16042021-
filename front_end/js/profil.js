@@ -1,6 +1,11 @@
 
 "use strict";
 
+const userString = localStorage.getItem('user');
+if (!userString) {
+    window.location = "connexion.html";
+};
+
 const img = document.getElementById('imgUserProfil');
 const firstname = document.getElementById('firstname');
 const lastname = document.getElementById('lastname');

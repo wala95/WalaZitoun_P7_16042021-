@@ -25,9 +25,7 @@ module.exports = (sequelize, DataTypes) => {
   Publication.init({
     utilisateur_id: DataTypes.INTEGER,
     content: DataTypes.STRING,
-    image: DataTypes.STRING,
-    like: DataTypes.INTEGER,
-    dislike: DataTypes.INTEGER
+    image: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Publication',

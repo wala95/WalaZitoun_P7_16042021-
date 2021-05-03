@@ -1,6 +1,9 @@
-
-
 "use strict";
+
+const userString = localStorage.getItem('user');
+if (userString) {
+    window.location = "accueil.html";
+};
 
 let firstname = document.getElementById("firstname");
 let lastname = document.getElementById("lastname");

@@ -56,7 +56,7 @@ body{margin-top:20px;}
   position: relative;
 }
 .post-container {
-  background: rgb(249, 248, 248);
+  background: white;
 }
 .textDiv{
     background: rgb(227, 227, 227);
@@ -138,7 +138,7 @@ img.profile-photo-sm {
 
     float: right;
 }
-.text-muted{
+.text-muted, .date{
     font-size: 12px
 }
 
@@ -159,3 +159,9 @@ img.profile-photo-sm {
 .trash{
   float:right;
 }
+.textRed {
+  color: #9C1C28;
+}
+
+#btnCommenter{
+background-color: rgb(6, 6, 218);}

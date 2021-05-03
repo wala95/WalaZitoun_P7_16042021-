@@ -1,4 +1,10 @@
 "use strict";
+
+const userString = localStorage.getItem('user');
+if (userString) {
+    window.location = "accueil.html";
+};
+
 let email =  document.getElementById("email");
 let pw = document.getElementById("pw");
 

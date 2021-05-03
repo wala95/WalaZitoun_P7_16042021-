@@ -11,8 +11,6 @@ module.exports = (req, res, next) => {
     res.locals.userId = userId;
     res.locals.isAdmin = isAdmin;
 
-
-
     next();
   } catch {
     res.status(401).json({

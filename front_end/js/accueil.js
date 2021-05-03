@@ -1,5 +1,4 @@
 "use strict";
-// toastr.info('Are you the 6 fingered man?');
 
 ///Récuperer le token avec l'id qui correspondent au user connecté
 const userString = localStorage.getItem('user');
@@ -85,8 +84,7 @@ function sendToServerPublication() {
     }
     if (!image.files || image.files[0] == null) {
         let data = {
-            content: content.value,
-            utilisateur_id: userJson.id
+            content: content.value
         };
         promiseFetch = fetch(publicationUrl, {
             method: 'post',
@@ -101,7 +99,6 @@ function sendToServerPublication() {
         let formData = new FormData();
         formData.append("image", image.files[0]);
         formData.append("content", content.value);
-        formData.append("utilisateur_id", userJson.id);
 
         promiseFetch = fetch(publicationUrl, {
             method: 'post',
@@ -206,9 +203,10 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
     let newNameUserPost = document.createElement('a');
     newNameUserPost.textContent = nameUserPost;
     newNameUserPost.classList.add("profile-link", "text-primary", "col-10", "m-0")
-    newNameUserPost.setAttribute('href', "profil.html");
-
-
+    if (userJson.id == postUserId) {
+        newNameUserPost.setAttribute('href', "profil.html");
+    }
+   
     let deletePost = document.createElement('i');
     deletePost.classList.add("fas", "fa-trash-alt", "mr-4", "text-danger", "cursorPointer");
     deletePost.setAttribute('onclick', `deletePublication(${postId})`);
@@ -232,8 +230,12 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
 
 
     userInfoPostDiv.appendChild(newNameUserPost);
+    // soit l'utilsateur lui meme soit l'admin peuvent supprimer
     if (userJson.id == postUserId || userJson.isAdmin) {
         userInfoPostDiv.appendChild(deletePost);
+    }
+    // uniquement l'utilisateur lui meme peut modifier
+    if (userJson.id == postUserId) {
         userInfoPostDiv.appendChild(updatePost);
     }
     userInfoPostDiv.appendChild(newCreatedAt);
@@ -272,7 +274,7 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
     btnCommenter.textContent = "Commenter";
     btnCommenter.setAttribute('type', 'button');
     btnCommenter.setAttribute('id', 'btnCommenter');
-    btnCommenter.classList.add("btn", "btn-primary", "btn-sm", "shadow-none", "mt-2");
+    btnCommenter.classList.add("btn", "btn-sm", "shadow-none", "mt-2");
     btnCommenter.setAttribute('onclick', `sendToServerCommentaire(${postId}, 'commentPost_${postId}')`);
 
 
@@ -347,7 +349,6 @@ function sendToServerCommentaire(id, idTextArea) {
 
     let data = {
         content: content,
-        utilisateur_id: userJson.id, // vient de localstorage 
         publication_id: id
     };
     fetch(commentaireUrl, {
@@ -399,12 +400,14 @@ function createComment(img, user, createdAt, content, commentId, commentUserId) 
     let userComment = document.createElement('a');
     userComment.textContent = user;
     userComment.classList.add("text-primary", "p-0","col-5")
-    userComment.setAttribute('href', "profil.html");
+    if (userJson.id == commentUserId) {
+        userComment.setAttribute('href', "profil.html");
+    }
 
 
     let createdAtComment = document.createElement('p');
     createdAtComment.textContent = moment(createdAt).fromNow();
-    createdAtComment.classList.add("text-muted", "p-0","m-0","col-5");
+    createdAtComment.classList.add("date", "p-0","m-0","col-5");
 
 
     let deleteComment = document.createElement('i');

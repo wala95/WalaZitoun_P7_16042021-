@@ -6,7 +6,6 @@ const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 
 
-
 router.post('/', auth, multer, publicationCtrl.creatPublication);
 
 router.get('/', auth, publicationCtrl.getPublication);

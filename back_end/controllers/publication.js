@@ -5,18 +5,15 @@ let { getLinkPreview, _ } = require('link-preview-js');
 
 
 exports.creatPublication = (req, res) => {// création des nouvelles publications
-  let utilisateur_id = req.body.utilisateur_id;
   let content = req.body.content;
   let img = null;
   if (req.file) {
     img = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
   }
   Publication.create({
-    utilisateur_id: utilisateur_id,
+    utilisateur_id: res.locals.userId,
     content: content,
-    image: img,
-    like: 0,
-    dislike: 0
+    image: img
   }).then(() => res.status(201).json({ message: 'Publication added!' }))
     .catch(error => {
       console.log("eroor", error)
