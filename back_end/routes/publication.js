@@ -13,5 +13,6 @@ router.get('/', auth, publicationCtrl.getPublication);
 
 router.delete('/:id', auth, publicationCtrl.deletePublication);
 
+router.put('/:id', auth, publicationCtrl.updatePublication);
 
 module.exports = router;

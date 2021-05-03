@@ -7,6 +7,7 @@
     <title>Groupomania</title>
     <link rel="stylesheet" href="./css/style.css" type='text/css' />
     <link rel="stylesheet" href="./css/accueil.css" type='text/css' />
+    <link rel="stylesheet" href="./css/toastr.min.css" type='text/css' />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -19,15 +20,13 @@
     <nav class="container-fluid ">
         <div class="row ">
             <div class="col navbar navbar-expand-lg navbar-light d-flex flex-row bd-highlight">
-                <a class="navbar-brand " href="accueil.html">
-                    <img src="./images/icon-left-font-monochrome-white.svg" alt="logo " id="logo">
-                </a>
+               <img src="./images/icon-left-font-monochrome-white.svg" alt="logo Groupomania " id="logo">
                 <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
                     aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="fa fa-bars text-light"></span>
                 </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarToggleExternalContent">
+                <div class="collapse navbar-collapse justify-content-end " id="navbarToggleExternalContent">
                     <ul class="navbar-nav  ">
                         <li class="nav-item ">
                             <a class="nav-link  text-light" href="accueil.html">Accueil</a>
@@ -44,82 +43,42 @@
             </div>
         </div>
     </nav>
+
     <!-- BODY -->
     <main>
 
-        <section class="container mt-5 mb-3">
-            <div class=" d-flex justify-content-center row">
-                <div class=" col-md-8">
-                    <div class="bg-white rounded d-flex flex-column comment-section">
+        <section class="container mt-5 mb-5">
+            <div class="row">
+                <div class=" col-lg-7  mx-auto">
+                    <div class="bg-white shadow-lg rounded d-flex flex-column comment-section">
                         <div class=" pt-4 pl-4 pr-4">
                             <div class="d-flex flex-row user-info">
-                                <img src="" width="100" height="70" id="img" class="rounded-circle pr-2">
+                                <img src="" width="100" height="70" id="imgUserPost" class="rounded-circle pr-2">
                                 <textarea class="form-control ml-1 shadow-none textarea "placeholder="Que voulez-vous partager?" id="content" name="publication" ></textarea>
                             </div>
                          </div>
                          
-                        <div class=" pb-3">
-                            <hr> 
-                            <div class=" mx-auto ">
-                                 <img id="imgPreview" style="cursor: pointer;"/>
-                                 <input type="file" name="image" onchange="loadFile(event)"   accept="image/png, image/jpeg, image/jpg" id="newImg" style="display:none">
+                        <div class=" ">
+                            <div class="  mx-auto ">
+                                 <img id="imgPreview"  class="mx-auto p-4 col cursorPointer"/>
+                                 <input type="file" name="image" onchange="loadFile(event)"   accept="image/png, image/jpeg, image/jpg, image/gif" id="newImg" >
                             </div> 
-                            
-                            <div class="ml-5">
-                                <button for="img" class=" col-6 btn-light text-center text-secondary " style="cursor: pointer;" onclick="document.getElementById('newImg').click()">Choisir une image  <i class="fas fa-image"></i></button>
-                                <button class="col-5 btn-primary shadow-none " type="button" id="btnPartager">Publier <i class="fas fa-share"></i></button>
+                            <div class=" d-flex flex-row ml-4 mr-4 mb-4">
+                                <button class=" col-6 btn-light text-center text-danger p-2" style="cursor: pointer;" onclick="document.getElementById('newImg').click()">Choisir une image  <i class="fas fa-image"></i></button>
+                                <button class="col-6 btn-light  text-danger p-2" type="button" id="btnPartager">Publier <i class="fas fa-share-alt"></i></button>
                              </div>
-                       
-
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-
-
         
         <section class="container ">
             <div class="row ">
-                <div class="col-md-8 mx-auto post-content " id="publication">
-                    <!-- <div class="post-container row">
-                            <div class="col-2">
-                                <img src="" id="imgUserPost" alt="user" class="profile-photo-md pull-left rounded-circle" width="100%">
-                            </div>
-                            <div class="post-detail col-10">      
-                                <div class="user-info ">
-                                    <h6 class="profile-link text-primary" id="nameUserPost"></h6>
-                                    <p class="text-muted" id="createdAt"></p>
-                                </div>    
-                                <div class="publication mt-2 d-flex flex-row align-items-start">
-                                    <img id="imgPost" width="200" src="" >
-                                    <p class="comment-text ml-5" id="contentPost"></p>
-                                </div>
-                                <div class="comment  mt-5" id='commentaire'>
-                                    <div class="commentDiv">
-                                        <img src="" alt="" class="profile-photo-sm col-2" id="imgComment">
-                                        <div class="textDiv col-10">
-                                        <h6 id="userComment"  class="text-primary"></h6>
-                                        <p class="text-muted" id="createdAtComment"></p>
-                                        <p id="contentComment">Lorem ipsum dolor sit amet, consectetur</p>
-                                        </div>
-                                    </div> -->
-                                <!-- </div>
-                                <div class="add-comment bg-light p-2">
-                                    <textarea class="form-control ml-1 shadow-none textarea" id="newComment"></textarea>
-                                    <button class="btn btn-primary btn-sm shadow-none  mt-2 "type="button" id="btnCommenter">Commenter</button>
-                                    <button class="btn btn-outline-primary btn-sm ml-1 shadow-none mt-2 " type="button" id="btnSupprimer">Supprimer</button>
-                             
-                                </div>
-                            </div>
-                    </div> --> 
+                <div class="col-lg-7 mx-auto post-content " id="publication">
                 </div>
             </div>
-            
         </section>
-
-
     </main>
     <!-- FOOTER -->
 
@@ -162,6 +121,7 @@
             </div>
         </div>
     </footer>
+    <script src="./js/toastr.min.js" defer></script>
     <script src="./js/moment.min.js" defer></script>
     <script src="./js/accueil.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"

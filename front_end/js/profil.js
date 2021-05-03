@@ -1,7 +1,7 @@
 
 "use strict";
 
-const img = document.getElementById('img');
+const img = document.getElementById('imgUserProfil');
 const firstname = document.getElementById('firstname');
 const lastname = document.getElementById('lastname');
 const email = document.getElementById('email');
@@ -141,3 +141,7 @@ btnDeconnexion.addEventListener('click', ()=> {
 
 });
 
+var loadFile = function(event) {
+	var image = document.getElementById('imgUserProfil');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};

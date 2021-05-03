@@ -1,15 +1,17 @@
 "use strict";
+// toastr.info('Are you the 6 fingered man?');
+
 ///Récuperer le token avec l'id qui correspondent au user connecté
 const userString = localStorage.getItem('user');
-if(!userString){
-    window.location="connexion.html";
+if (!userString) {
+    window.location = "connexion.html";
 };
 const userJson = JSON.parse(userString);
 
 
 moment.locale('fr');
 
-const img = document.getElementById('img');
+const img = document.getElementById('imgUserPost');
 
 
 
@@ -25,14 +27,7 @@ const createdAt = document.getElementById('createdAt');
 const newComment = document.getElementById('newComment');
 
 
-const btnDeconnexion=document.getElementById("btnDeconnexion");
-// const imgComment= document.getElementById('imgComment');
-// const userComment = document.getElementById('userComment');
-// const contentComment= document.getElementById('contentComment');
-// const createdAtComment= document.getElementById('createdAtComment');
-
-// const imgUserPost = document.getElementById('imgUserPost');
-// const nameUserPost = document.getElementById('nameUserPost');
+const btnDeconnexion = document.getElementById("btnDeconnexion");
 
 
 
@@ -72,7 +67,7 @@ function showUserPostZone() {
         // récuperer les informations du user selectionné
         .then(data => {
             img.src = data.img;
-           
+
 
         })
         .catch(erreurCatche => console.log(`il y a une erreur ${erreurCatche.message}`));
@@ -85,6 +80,9 @@ function showUserPostZone() {
 //  Envoyer les valeurs de la publication a l'api
 function sendToServerPublication() {
     let promiseFetch = null;
+    if (!content.value && !image.files[0]) {
+        return
+    }
     if (!image.files || image.files[0] == null) {
         let data = {
             content: content.value,
@@ -129,17 +127,72 @@ function sendToServerPublication() {
         });
 }
 
+function sendToServerUpdate(postId, newContent) {
+    let data = {
+       
+        content : newContent
+    }
+    fetch(publicationUrl + `/${postId}`, {
+        method: 'put',
+        headers: {
+            'Authorization': `bearer ${userJson.token}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        //  consommer la promesse et retourner uniquement son body sous format json
+        .then(response => response.json())
+
+        // récuperer les informations de la publication selectionné
+        .then(posts => {
+            document.location.reload();
+
+        })
+        .catch(erreurCatche => console.log(`il y a une erreur ${erreurCatche.message}`));
+}
+
+
+function onPostContentChange(event, postId) {
+    //le keycode de entrer est 13
+    if (event.keyCode === 13 && event.target.value) {
+        sendToServerUpdate(postId, event.target.value);
+    }
+    
+}
+
+function updatePublication(iconeUpdate, postId, idHtmlPostContent) {
+
+    let p = document.getElementById(idHtmlPostContent);
+    let parentDiv = p.parentNode;
+
+    let editContent = document.createElement('input');
+    editContent.setAttribute("type", "text");
+    editContent.classList.add("form-control", "ml-1", "shadow-none");
+    editContent.setAttribute('value', p.textContent);//contenu brute avant detection du lien (a)
+    editContent.setAttribute('onKeyUp', `onPostContentChange(event, ${postId})`);//ajouter un listenner à la saisie pour detecter le moment de cliquer sur entrer
+
+
+    parentDiv.replaceChild(editContent, p);
+
+
+    editContent.focus();// mettre le cursor sur le input pour faciliter le demarrage de la modification
+    iconeUpdate.remove();//supprimer le icone edition
+}
+
 
 // creer les post avec les comentaires
 function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, postId, postUserId) {
 
 
     let imageUserPostDiv = document.createElement('div');
-    imageUserPostDiv.classList.add("col-2");
+    imageUserPostDiv.classList.add("col-1", "p-0");
+
     let newImageUserPost = document.createElement('img');
     newImageUserPost.src = imgUserPost;
-    newImageUserPost.classList.add("profile-photo-md", "pull-left", "rounded-circle");
-    newImageUserPost.setAttribute("width", "100%");
+    newImageUserPost.classList.add("profile-photo-md", "pull-left", "rounded-circle", "mx-auto");
+    newImageUserPost.setAttribute("width", "50");
+    newImageUserPost.setAttribute("height", "50");
 
     imageUserPostDiv.appendChild(newImageUserPost);
 
@@ -147,30 +200,28 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
     userInfoPostDiv.classList.add("user-info", "row");
 
     let postDetailDiv = document.createElement('div');
-    postDetailDiv.classList.add("post-detail", "col-10");
+    postDetailDiv.classList.add("post-detail", "col-11");
 
-    let newNameUserPost = document.createElement('h6');
+    let newNameUserPost = document.createElement('a');
     newNameUserPost.textContent = nameUserPost;
-    newNameUserPost.classList.add("profile-link", "text-primary", "col-7", "m-0")
+    newNameUserPost.classList.add("profile-link", "text-primary", "col-10", "m-0")
+    newNameUserPost.setAttribute('href', "profil.html");
 
 
-
-    let deletePost = document.createElement('button');
-    deletePost.textContent = "Supprimer";
-    deletePost.setAttribute('type', 'button');
-    deletePost.setAttribute('id', 'deletePost');
-    deletePost.classList.add("btn", "btn-white", "text-secondary", "btn-sm", "col-3", "p-0");
+    let deletePost = document.createElement('i');
+    deletePost.classList.add("fas", "fa-trash-alt", "mr-4", "text-danger", "cursorPointer");
     deletePost.setAttribute('onclick', `deletePublication(${postId})`);
 
 
 
+    let newContentPost = document.createElement('p');
+    newContentPost.setAttribute('id', `postContent_${postId}`)
+    newContentPost.innerHTML = urlify(contentPost);
+    newContentPost.classList.add("comment-text");
 
-    let updatePost = document.createElement('button');
-    updatePost.textContent = "Modifier";
-    updatePost.setAttribute('type', 'button');
-    updatePost.setAttribute('id', 'updatePost');
-    updatePost.classList.add("btn", "btn-white", "text-secondary", "btn-sm", "col-2", "p-0");
-    // updateComment.setAttribute('onclick', `sendToServerCommentaire(${postId}, 'commentPost_${postId}')`);
+    let updatePost = document.createElement('i');
+    updatePost.classList.add("fas", "fa-edit", "cursorPointer");
+    updatePost.setAttribute('onclick', `updatePublication(this, ${postId}, 'postContent_${postId}')`);
 
 
     let newCreatedAt = document.createElement('p');
@@ -180,29 +231,22 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
 
 
     userInfoPostDiv.appendChild(newNameUserPost);
-    if(userJson.id == postUserId || userJson.isAdmin){
-    userInfoPostDiv.appendChild(deletePost);
-    userInfoPostDiv.appendChild(updatePost);
+    if (userJson.id == postUserId || userJson.isAdmin) {
+        userInfoPostDiv.appendChild(deletePost);
+        userInfoPostDiv.appendChild(updatePost);
     }
     userInfoPostDiv.appendChild(newCreatedAt);
 
     let publicationDiv = document.createElement('div');
     publicationDiv.classList.add("publication", "mt-2");
 
-
-
-
-
-    let newContentPost = document.createElement('p');
-    newContentPost.textContent = contentPost;
-    newContentPost.classList.add("comment-text");
-
     publicationDiv.appendChild(newContentPost);
 
     if (imgPost) {
         let newImgPost = document.createElement('img');
         newImgPost.src = imgPost;
-        newImgPost.setAttribute("width", "70%");
+        newImgPost.setAttribute("width", "100%");
+        newImgPost.setAttribute("height", "250px");
         publicationDiv.appendChild(newImgPost);
     }
 
@@ -218,7 +262,7 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
     let addCommentDiv = document.createElement('div');
     addCommentDiv.classList.add("add-comment", "p-2", "text-right");
     let textarea = document.createElement('textarea');
-    textarea.classList.add("form-control", "ml-1", "shadow-none", "textarea", "col-10");
+    textarea.classList.add("form-control", "shadow-none", "textarea", "col-12",);
     textarea.setAttribute("placeholder", `Ecrivez un commentaire`);
     textarea.setAttribute("id", `commentPost_${postId}`);
 
@@ -231,16 +275,9 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
 
 
 
-    let btnAnnuler = document.createElement('button');
-    btnAnnuler.textContent = "Annuler";
-    btnCommenter.setAttribute('id', 'btnAnnulerPost');
-    btnAnnuler.setAttribute('type', 'button');
-    btnAnnuler.classList.add("btn", "btn-outline-primary", "btn-sm", "ml-1", "shadow-none", "mt-2");
-
-
     addCommentDiv.appendChild(textarea);
     addCommentDiv.appendChild(btnCommenter);
-    addCommentDiv.appendChild(btnAnnuler);
+
 
 
 
@@ -251,7 +288,7 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
 
 
     let postcontainerDiv = document.createElement('div');
-    postcontainerDiv.classList.add("post-container", "row", "mb-5");
+    postcontainerDiv.classList.add("post-container", "shadow", "row", "m-1", "mb-5");
     postcontainerDiv.appendChild(imageUserPostDiv);
     postcontainerDiv.appendChild(postDetailDiv);
 
@@ -302,6 +339,10 @@ function sendToServerCommentaire(id, idTextArea) {
 
     let content = document.getElementById(idTextArea).value;
 
+    if (!content) {
+        return
+    }
+
     let data = {
         content: content,
         utilisateur_id: userJson.id, // vient de localstorage 
@@ -343,33 +384,43 @@ function createComment(img, user, createdAt, content, commentId, commentUserId) 
 
     let imgComment = document.createElement('img');
     imgComment.src = img;
-    imgComment.classList.add("profile-photo-sm", "col-2", "mr-3");
+    imgComment.classList.add("profile-photo-sm", "col-1","p-0", "mr-3");
 
 
     let textDiv = document.createElement('div');
-    textDiv.classList.add("col-10", "row", "textDiv", "rounded", "mb-2", "p-2");
-    let userComment = document.createElement('h6');
+    textDiv.classList.add("col-11", "row", "textDiv", "rounded", "mb-2", "p-2","d-flex", "flex-column");
+
+    let infoDiv = document.createElement('div');
+    infoDiv.classList.add("d-flex", "flex-row");
+
+    let userComment = document.createElement('a');
     userComment.textContent = user;
-    userComment.classList.add("text-primary", "col-4", "p-0")
+    userComment.classList.add("text-primary", "p-0","col-5")
+    userComment.setAttribute('href', "profil.html");
+
+
     let createdAtComment = document.createElement('p');
     createdAtComment.textContent = moment(createdAt).fromNow();
-    createdAtComment.classList.add("text-muted", "col-5", "p-0");
-    let deleteComment = document.createElement('button');
-    deleteComment.textContent = "Supprimer";
-    deleteComment.setAttribute('type', 'button');
-    deleteComment.setAttribute('id', 'deleteComment');
-    deleteComment.classList.add("btn", "btn-sm", "mb-2", "col-3");
-    deleteComment.setAttribute('onclick', `deleteCommentaire(${commentId})`);
-    let ContentComment = document.createElement('p');
-    ContentComment.textContent = content;
-    ContentComment.classList.add("xxcc");
-    textDiv.appendChild(userComment);
-    textDiv.appendChild(createdAtComment);
-    if(userJson.id == commentUserId || userJson.isAdmin){
-    textDiv.appendChild(deleteComment);
-    }
-    textDiv.appendChild(ContentComment);
+    createdAtComment.classList.add("text-muted", "p-0","m-0","col-5");
 
+
+    let deleteComment = document.createElement('i');
+    deleteComment.classList.add("fas", "fa-trash-alt", "text-danger", "cursorPointer","trash","col-1");
+    deleteComment.setAttribute('onclick', `deleteCommentaire(${commentId})`);
+
+ 
+
+    infoDiv.appendChild(userComment);
+    infoDiv.appendChild(createdAtComment);
+    if (userJson.id == commentUserId || userJson.isAdmin) {
+        infoDiv.appendChild(deleteComment);
+    }
+
+    let ContentComment = document.createElement('p');
+    ContentComment.classList.add("m-0");
+    ContentComment.textContent = content;
+    textDiv.appendChild(infoDiv);
+    textDiv.appendChild(ContentComment);
 
     let commentDiv = document.createElement('div');
     commentDiv.classList.add("row");
@@ -448,16 +499,26 @@ function deleteCommentaire(id) {
         });
 };
 
-var loadFile = function(event) {
-	var image = document.getElementById('imgPreview');
-	image.src = URL.createObjectURL(event.target.files[0]);
-    image.setAttribute("width", "200");
-    image.setAttribute("height", "200");
+// visiualiser l'image avant de l'envoyer au serveur
+function loadFile (event) {
+    let image = document.getElementById('imgPreview');
+    image.src = URL.createObjectURL(event.target.files[0]);
+    image.setAttribute("width", "100%");
+    image.setAttribute("height", "500px");
 };
+
+// chercher les liens dans le text et le remplacer par une balise a link pour pouvor l'ouvrir dans une nouvelle onglet
+function urlify(text) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, function (url) {
+        return "<a target=_blank href='" +  url + "'>" + url + "</a>";
+    });
+}
 
 
 //déconnexion 
 btnDeconnexion.addEventListener('click', () => {
-   localStorage.removeItem('user')
-   window.location='connexion.html';
+    localStorage.removeItem('user')
+    window.location = 'connexion.html';
 });
+

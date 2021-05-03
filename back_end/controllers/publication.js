@@ -1,29 +1,28 @@
 const models = require('../models');
 const Publication = models.Publication;
 const fs = require('fs');
+let { getLinkPreview, _ } = require('link-preview-js');
 
 
 exports.creatPublication = (req, res) => {// création des nouvelles publications
   let utilisateur_id = req.body.utilisateur_id;
-  console.log(utilisateur_id)
   let content = req.body.content;
   let img = null;
   if (req.file) {
     img = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
   }
-  const publication = Publication.create({
+  Publication.create({
     utilisateur_id: utilisateur_id,
     content: content,
     image: img,
     like: 0,
     dislike: 0
-  })// enregistrer la nouvelle publication dans la BDD
-    .then(() => res.status(201).json({ message: 'Publication added!' }))
+  }).then(() => res.status(201).json({ message: 'Publication added!' }))
     .catch(error => {
       console.log("eroor", error)
       return res.status(400).json({ error: 'cannot add publication' })
     });
-};
+}
 
 exports.getPublication = (req, res, next) => {
   Publication.findAll({
@@ -73,10 +72,8 @@ exports.deletePublication = (req, res) => {
     });
   }
   //is admin
-
-
   findPromise.then(publication => {
-    if (!publication) { // si user non trouvé
+    if (!publication) { // si publication non trouvé
       return res.status(401).json({ error: 'Publication non trouvé pour cet utilisateur!' });
     }
     let image = publication.image;
@@ -109,3 +106,23 @@ exports.deletePublication = (req, res) => {
     });
 };
 
+exports.updatePublication = (req, res) => {// modifier la publication
+
+  let content = req.body.content;
+
+
+  Publication.update( 
+    {content : content}, {
+    where: {
+      id: req.params.id,
+      utilisateur_id: res.locals.userId
+    }})
+    .then(() => {
+
+      res.status(200).json({ message: 'Publication modifier!' })
+    })
+    .catch(error => {
+      console.log("eroor", error)
+      return res.status(400).json({ error: 'cannot update publication' })
+    });
+}

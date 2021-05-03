@@ -7,7 +7,7 @@ body {
 }
 
 .comment-text {
-    font-size: 12px
+    font-size: 18px
 }
 
 .fs-12 {
@@ -55,11 +55,11 @@ body{margin-top:20px;}
   overflow: hidden;
   position: relative;
 }
-.post-container{
-  background: white;
+.post-container {
+  background: rgb(249, 248, 248);
 }
 .textDiv{
-    background: rgb(242, 242, 242);
+    background: rgb(227, 227, 227);
 }
 .post-content img.post-image, video.post-video, .google-maps{
   width: 100%;
@@ -109,11 +109,10 @@ body{margin-top:20px;}
   min-width: 0;
 }
 
-/* img.profile-photo-md {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-} */
+img.profile-photo-md {
+float: right;
+
+}
 
 img.profile-photo-sm {
     height: 40px;
@@ -140,5 +139,23 @@ img.profile-photo-sm {
     float: right;
 }
 .text-muted{
-    font-size: 12px;
+    font-size: 12px
+}
+
+.comment-text {
+  font-size: 15px;
+}
+.cursorPointer{
+  cursor: pointer;
+
+}
+#newImg{
+  display: none;
+}
+.fas {
+  font-size: 17px;
+}
+
+.trash{
+  float:right;
 }

@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="./css/profil.css" type='text/css' />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-        <link rel="shortcut icon" type="image/ico" href="./images/icon.png">
+    <link rel="shortcut icon" type="image/ico" href="./images/icon.png">
     <script src="https://kit.fontawesome.com/ed8a484479.js" crossorigin="anonymous"></script>
 </head>
 
@@ -18,121 +17,126 @@
     <!-- NAVBAR -->
     <nav class="container-fluid ">
         <div class="row ">
-            <div class="col navbar navbar-expand-lg navbar-light d-flex flex-row bd-highlight mb-2">
-                <a class="navbar-brand " href="accueil.html">
-                    <img src="./images/icon-left-font-monochrome-white.svg" alt="logo " id="logo">
-                </a>
+            <div class="col navbar navbar-expand-lg navbar-light d-flex flex-row bd-highlight">
+                <img src="./images/icon-left-font-monochrome-white.svg" alt="logo Groupomania " id="logo">
                 <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
                     aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="fa fa-bars text-light"></span>
                 </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarToggleExternalContent">
+                <div class="collapse navbar-collapse justify-content-end " id="navbarToggleExternalContent">
                     <ul class="navbar-nav  ">
                         <li class="nav-item ">
                             <a class="nav-link  text-light" href="accueil.html">Accueil</a>
                         </li>
-                      
-                        
                         <li class="nav-item ">
-                            <a class="nav-link text-light"  id="btnDeconnexion">Déconnexion</a>
+                            <a class="nav-link text-light" id="btnDeconnexion">Déconnexion</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
     </nav>
+
     <!-- BODY -->
     <main>
-    <div class="container mt-4">
-        <div class="row gutters">
-        <div class="col-xl-4 col-lg-3 col-md-12 col-sm-12 col-12">
-        <div class="card h-100">
-            <div class="card-body">
-                <div class="account-settings">
-                    <div class="user-profile">
-                        <div class="user-avatar">
-                            <img src="" alt="Photo de profil" id="img">
-                        </div>
-                        <h3 class="user-name" id="firstname"></h3>
-                        <h3 class="user-name" id="lastname"></h3>
-                        <h6 class="user-email" id="email"></h6>
-                    </div>
-                    <div class="about">
-                        <h5>Biographie</h5>
-                        <p id="bio"></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-        <div class="col-xl-8 col-lg-9 col-md-12 col-sm-12 col-12">
-        <div class="card h-100">
-            <div class="card-body">
-                <h1 class="text-center mb-4">Mes informations</h1>
-                <div class="row gutters">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <h6 class="mb-2 ">Modifiez vos informations personnelles</h6>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="form-group">
-                            <label for="lastnameModify">Nom</label>
-                            <input type="text" class="form-control" id="lastnameModify" placeholder="Votre nom">
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="form-group">
-                            <label for="firstnameModify">Prénom</label>
-                            <input type="text" class="form-control" id="firstnameModify" placeholder="Votre prénom">
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 ">
-                        <div class="form-group">
-                            <label for="bioModify" class="form-label">Biographie</label>
-                            <textarea name="bio" class="form-control" aria-label="With textarea" id="bioModify" placeholder="Votre nouvelle Biographie"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-3 ">
-                        <label >Photo de profil</label>
-                        <input type="file" name="image" class="form-control-file"  accept="image/png, image/jpeg, image/jpg" id="imgModify">
-                    </div>
-                    
-                </div>
-                <div class="row gutters">
-                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 ">
-                        <div class=" text-right ">
-                            <button type="submit" id="btnModify" name="submit" class="btn btn-secondary  mb-4 mt-2 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">Modifier</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="border rounded p-3 border-danger">
-                <div class="row gutters ">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <h6 class="mt-2 mb-2 text-danger">Supprimez votre compte</h6>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="form-group">
-                            <label for="pwDelete">Merci de renseigner votre mot de passe</label>
-                            <input name="pw" type="password" class="form-control" placeholder="Mot de passe" id="pwDelete">
-                        </div>
-                    </div>
-                    
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                     
-                            <div class="text-center">
-                                <button type="button" id="btnDelete" name="submit" class="btn btn-danger btn-lg mb-2  ">Supprimer</button>
+        <div class="container mt-4  ">
+            <div class="row gutters ">
+                <div class="col-xl-4 col-lg-3 col-md-12 col-sm-12 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="account-settings">
+                                <div class="user-profile">
+                                    <div class="user-avatar">
+                                        <img alt="Photo de profil" id="imgUserProfil">
+                                        <input type="file" name="image" onchange="loadFile(event)"
+                                            accept="image/png, image/jpeg, image/jpg, image/gif" id="imgModify">
+                                    </div>
+                                    <h3 class="user-name" id="firstname"></h3>
+                                    <h3 class="user-name" id="lastname"></h3>
+                                    <h6 class="user-email" id="email"></h6>
+                                </div>
+                                <div class="about">
+                                    <h5>Biographie</h5>
+                                    <p id="bio"></p>
+                                </div>
                             </div>
-                     
                         </div>
-                
+                    </div>
                 </div>
-                
+                <div class="col-xl-8 col-lg-9 col-md-12 col-sm-12 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <h5 class="mb-5 mt-2">Modifiez vos informations personnelles</h5>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="lastnameModify">Nom</label>
+                                        <input type="text" class="form-control" id="lastnameModify"
+                                            placeholder="Votre nom">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="firstnameModify">Prénom</label>
+                                        <input type="text" class="form-control" id="firstnameModify"
+                                            placeholder="Votre prénom">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 ">
+                                    <div class="form-group">
+                                        <label for="bioModify" class="form-label">Biographie</label>
+                                        <textarea name="bio" class="form-control" aria-label="With textarea"
+                                            id="bioModify" placeholder="Votre nouvelle Biographie"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 ">
+                                    <p class="mb-1">Photo de profil</p>
+                                    <!-- <input type="file" name="image" class="form-control-file"  accept="image/png, image/jpeg, image/jpg" id="imgModify"> -->
+                                    <button class="col-12  btn-light text-center text-secondary p-2 mt-3 cursorPointer"
+                                       
+                                        onclick="document.getElementById('imgModify').click()">Nouvelle photo <i
+                                            class="fas fa-image"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gutters mx-auto">
+                            <div class=" ">
+                                <div class="">
+                                    <button type="submit" id="btnModify" name="submit"
+                                        class="btn btn-danger mb-4 mt-2 pr-4 pl-4 ">Modifier</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border rounded p-3 border-danger">
+                            <div class="row gutters ">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <h6 class="mt-2 mb-2 text-danger">Supprimez votre compte</h6>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="pwDelete">Merci de renseigner votre mot de passe</label>
+                                        <input name="pw" type="password" class="form-control" placeholder="Mot de passe"
+                                            id="pwDelete">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+
+                                    <div class="text-center">
+                                        <button type="button" id="btnDelete" name="submit"
+                                            class="btn btn-danger  mb-2  ">Supprimer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         </div>
-        </div>
-    </div>
     </main>
     <!-- FOOTER -->
 

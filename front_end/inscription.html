@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./css/style.css" type='text/css' />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
     <link rel="shortcut icon" type="image/ico" href="./images/icon.png">
     <script src="https://kit.fontawesome.com/ed8a484479.js" crossorigin="anonymous"></script>
 </head>
@@ -18,9 +17,7 @@
     <nav class="container-fluid ">
         <div class="row ">
             <div class="col navbar navbar-expand-lg navbar-light d-flex flex-row bd-highlight">
-                <!-- <a class="navbar-brand " href="index.html"> -->
-                    <img src="./images/icon-left-font-monochrome-white.svg" alt="logo " id="logo">
-                <!-- </a> -->
+                <img src="./images/icon-left-font-monochrome-white.svg" alt="logo Groupomania " id="logo">
                 <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +31,6 @@
                         <li class="nav-item ">
                             <a class="nav-link  text-light" href="connexion.html">Connexion</a>
                         </li>
-                      
                     </ul>
                 </div>
             </div>
@@ -45,74 +41,60 @@
         <h1 class="text-danger text-center mt-2">Inscrivez-vous ici</h1>
         <hr>
         <div class="col-sm-12 col-lg-6 mx-auto">
-        <section class="inscription row rounded shadow-lg mx-auto p-3 ">
-            
-            <form class="col-lg-12 mx-auto" novalidate id='formulaire' >
-                
-                <div class="col-3 mx-auto ">
-                <img id="output" style="cursor: pointer;" onclick="document.getElementById('img').click()" src="http://localhost:3000/images/no_photo_profil.png" width="100" height="100" class="rounded-circle"/>
-                </div>
-                <div class="form-group  text-center" >
-                <label for="img" class="text-center text-secondary" style="cursor: pointer;">Changer la photo</label>
-                <!-- <button class="form-control-file btn-light rounded" onclick="document.getElementById('img').click() ">Votre photo</button> -->
-
-                <input type="file" name="image" onchange="loadFile(event)"   accept="image/png, image/jpeg, image/jpg" id="img" style="display:none">
-    
-                </div>
-                <div class="form-row mt-2">
-                    <div class="col-lg-6 col-sm-12 ">
-                        <label for="firstname" class="fs-bold ">Prénom*</label>
-                        <input name="firstname" type="text" class="form-control" id="firstname" placeholder="Prénom" required>
+            <section class="inscription row rounded shadow-lg mx-auto p-3 ">
+                <form class="col-lg-12 mx-auto"  id='formulaire'>
+                    <div class="col-3 mx-auto">
+                        <img id="output" onclick="document.getElementById('img').click()" src="http://localhost:3000/images/no_photo_profil.png" class="rounded-circle" alt="photo de profil"/>
                     </div>
-                
-                    <div class="col-lg-6 col-sm-12">
-                        <label for="lastname">Nom*</label>
-                        <input name ="lastname" type="text" class="form-control" id="lastname" placeholder="Nom" required>
+                    <div class="form-group  text-center">
+                        <label for="img" class="text-center text-secondary cursorPointer"  >Changer la photo</label>
+                        <input id="img" type="file" name="image" onchange="loadFile(event)" accept="image/png, image/jpeg, image/jpg">
                     </div>
-                    </div>
-                <div class="form-row">
-                    <div class="col mt-2">
-                        <label for="email">Adresse mail*</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">@</span>
-                            </div>
-                            <input name="email" type="text" class="form-control" id="email" placeholder="Adresse mail" required>
+                    <div class="form-row mt-2">
+                        <div class="col-lg-6 col-sm-12 ">
+                            <label for="firstname" class="fs-bold ">Prénom*</label>
+                            <input name="firstname" type="text" class="form-control" id="firstname" placeholder="Prénom">
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <label for="lastname">Nom*</label>
+                            <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Nom">
                         </div>
                     </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col  mt-2">
-                        <label for="pw" class="form-label">Mot de passe*</label>
-                        <input name="pw" type="password" class="form-control" placeholder="Mot de passe" id="pw">
+                    <div class="form-row">
+                        <div class="col mt-2">
+                            <label for="email">Adresse mail*</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">@</span>
+                                </div>
+                                <input name="email" type="text" class="form-control" id="email" placeholder="Adresse mail">
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col  mt-2">
-                        <label for="bio" class="form-label">Biographie</label>
-                        <textarea name="bio" class="form-control" aria-label="With textarea" id="bio"></textarea>
+                    <div class="form-row">
+                        <div class="col  mt-2">
+                            <label for="pw" class="form-label">Mot de passe*</label>
+                            <input name="pw" type="password" class="form-control" placeholder="Mot de passe" id="pw">
+                        </div>
                     </div>
-                </div>
-                
-                
-                
-                <div class="row ">
-                    <div class="col text-center link mt-2">
-                        <button type='button' class="btn btn-primary w-50 clearfix m-2" id="btnSend" data-bs-toggle="modal" data-bs-target="#exampleModal">Valider</button>
-                        <p>Vous-avez déjà un compte? <a href="connexion.html"><strong>Connectez-vous</strong></a></p>
+                    <div class="form-row">
+                        <div class="col  mt-2">
+                            <label for="bio" class="form-label">Biographie</label>
+                            <textarea name="bio" class="form-control" aria-label="With textarea" id="bio"></textarea>
+                        </div>
                     </div>
-                   
-                </div>
-                
-            </form>
-    
-        </section>
-    </div>
+                    <div class="row ">
+                        <div class="col text-center link mt-2">
+                            <button type='button' class="btn btn-danger w-50 clearfix m-3" id="btnSend" data-bs-toggle="modal" data-bs-target="#exampleModal">Valider</button>
+                            <p>Vous-avez déjà un compte? <a href="connexion.html"><strong class="text-danger">Connectez-vous</strong></a>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
     </main>
     <!-- FOOTER -->
-
     <footer class="bloc bgc-atomic-tangerine d-bloc mt-5" id="bloc-8">
         <div class="container bloc-sm">
             <div class="row ">
@@ -120,30 +102,22 @@
                     <div class="row row-no-gutters social ">
                         <div class="col-sm-3  ">
                             <div class="text-center ">
-                                <a class="social text-light" href="#"
-                                    aria-label="lien twitter de l'agence Groupomania"><span
-                                        class="fab fa-twitter "></span></a>
+                                <a class="social text-light" href="#" aria-label="lien twitter de l'agence Groupomania"><span class="fab fa-twitter "></span></a>
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="text-center">
-                                <a class="social text-light " href="#"
-                                    aria-label="lien facebook de l'agence Groupomania"><span
-                                        class="fab fa-facebook "></span></a>
+                                <a class="social text-light " href="#" aria-label="lien facebook de l'agence Groupomania"><span class="fab fa-facebook "></span></a>
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="text-center">
-                                <a class="social text-light" href="#"
-                                    aria-label="lien dribble de l'agence Groupomania"><span
-                                        class="fab fa-dribbble"></span></a>
+                                <a class="social text-light" href="#" aria-label="lien dribble de l'agence Groupomania"><span class="fab fa-dribbble"></span></a>
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="text-center">
-                                <a class="social text-light" href="#"
-                                    aria-label="lien instagram de l'agence Groupomania"><span
-                                        class="fab fa-instagram "></span></a>
+                                <a class="social text-light" href="#" aria-label="lien instagram de l'agence Groupomania"><span class="fab fa-instagram "></span></a>
                             </div>
                         </div>
                     </div>
@@ -151,12 +125,7 @@
             </div>
         </div>
     </footer>
-
-
     <script src="./js/inscription.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 </body>
-
 </html>

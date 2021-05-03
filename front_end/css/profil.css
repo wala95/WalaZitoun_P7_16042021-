@@ -57,4 +57,10 @@
     margin-bottom: 1rem;
   }
   
- 
+  .cursorPointer{
+    cursor: pointer;
+  
+  }
+  #imgModify{
+    display: none;
+  }

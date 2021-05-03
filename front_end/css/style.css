@@ -40,5 +40,21 @@ li {
     color: rgb(9, 9, 150);
 }
 
+#output{
+  cursor: pointer;
+  width : 80px;
+  height: 80px;
+}
+#img{
+  display:none
+}
+#forimg{
+  cursor: pointer;
+}
+#bloc-8 {
+  margin-top: 160px;
+}
+.cursorPointer{
+  cursor: pointer;
 
-
+}
