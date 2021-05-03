@@ -13,7 +13,10 @@ HTML5, CSS3, BOOTSTRAP5, JS, Node.js, MySql, Sequelise , Express
 - Créer une BDD vierge avec la commande “create database <NOMBDD>;”
 - Remplir bien le fichier .env en se basant sur .envexemple
 - Dans le terminal:
-> cd back_end
-> npm install
-> npx sequelize-cli db:migrate
-> nodemon server
+    * cd back_end
+
+    * npm install
+
+    * npx sequelize-cli db:migrate
+
+    * nodemon server
