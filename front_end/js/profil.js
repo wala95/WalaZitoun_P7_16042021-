@@ -21,7 +21,6 @@ const bioModify = document.getElementById('bioModify');
 const pwDelete = document.getElementById('pwDelete');
 
 ///Récuperer l'url avec l'id qui correspond au user selectionné
-const userString = localStorage.getItem('user');
 const userJson = JSON.parse(userString);
 
 const userUrl = `http://127.0.0.1:3000/api/profil/${userJson.id}`;
