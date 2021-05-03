@@ -191,6 +191,7 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
     let newImageUserPost = document.createElement('img');
     newImageUserPost.src = imgUserPost;
     newImageUserPost.classList.add("profile-photo-md", "pull-left", "rounded-circle", "mx-auto");
+    newImageUserPost.setAttribute("alt", "photo de profil");
     newImageUserPost.setAttribute("width", "50");
     newImageUserPost.setAttribute("height", "50");
 
@@ -247,6 +248,7 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
         newImgPost.src = imgPost;
         newImgPost.setAttribute("width", "100%");
         newImgPost.setAttribute("height", "250px");
+        newImgPost.setAttribute("alt", "image de la publication");
         publicationDiv.appendChild(newImgPost);
     }
 
@@ -385,6 +387,7 @@ function createComment(img, user, createdAt, content, commentId, commentUserId) 
     let imgComment = document.createElement('img');
     imgComment.src = img;
     imgComment.classList.add("profile-photo-sm", "col-1","p-0", "mr-3");
+    imgComment.setAttribute("alt", "photo de profil");
 
 
     let textDiv = document.createElement('div');
