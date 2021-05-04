@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 
 <head>
@@ -52,15 +52,15 @@
                     <div class="bg-white shadow-lg rounded d-flex flex-column comment-section">
                         <div class=" pt-4 pl-4 pr-4">
                             <div class="d-flex flex-row user-info">
-                                <img src="#" width="100" height="70" id="imgUserPost" class="rounded-circle pr-2" alt="photo de profil">
-                                <textarea class="form-control ml-1 shadow-none textarea" placeholder="Que voulez-vous partager?" id="content" name="publication" ></textarea>
+                                <img src="#" width="70" height="70" id="imgUserPost" class="rounded-circle pr-2" alt="photo de profil">
+                                <textarea class="form-control ml-1 shadow-none textarea" placeholder="Que voulez-vous partager?" id="content" name="publication" aria-label="Que voulez-vous partager?"></textarea>
                             </div>
                          </div>
                          
                         <div class=" ">
                             <div class="  mx-auto ">
-                                 <img id="imgPreview"   class="mx-auto p-4 col cursorPointer" />
-                                 <input type="file" name="image" onchange="loadFile(event)"   accept="image/png, image/jpeg, image/jpg, image/gif" id="newImg" >
+                                 <img id="imgPreview" class="mx-auto p-4 col cursorPointer" />
+                                 <input type="file" name="image" onchange="loadFile(event)" aria-label="image de la publication"  accept="image/png, image/jpeg, image/jpg, image/gif" id="newImg" />
                             </div> 
                             <div class=" d-flex flex-row ml-4 mr-4 mb-4">
                                 <button class=" col-6 btn-light text-center p-2 m-0 cursorPointer shadow-sm"  onclick="document.getElementById('newImg').click()">Choisir une image  <i class="fas fa-image textRed"></i></button>

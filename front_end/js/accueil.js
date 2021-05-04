@@ -269,6 +269,7 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
     textarea.classList.add("form-control", "shadow-none", "textarea", "col-12",);
     textarea.setAttribute("placeholder", `Ecrivez un commentaire`);
     textarea.setAttribute("id", `commentPost_${postId}`);
+    textarea.setAttribute("aria-label", "commentaire");
 
     let btnCommenter = document.createElement('button');
     btnCommenter.textContent = "Commenter";
@@ -509,6 +510,7 @@ function deleteCommentaire(id) {
 function loadFile (event) {
     let image = document.getElementById('imgPreview');
     image.src = URL.createObjectURL(event.target.files[0]);
+    image.setAttribute("alt", "image de la publication ");
     image.setAttribute("width", "100%");
     image.setAttribute("height", "500px");
 };
