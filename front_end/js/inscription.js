@@ -2,7 +2,7 @@
 
 const userString = localStorage.getItem('user');
 if (userString) {
-    window.location = "accueil.html";
+  window.location = "accueil.html";
 };
 
 let firstname = document.getElementById("firstname");
@@ -12,14 +12,12 @@ let pw = document.getElementById("pw");
 let img = document.getElementById("img");
 let bio = document.getElementById('bio');
 
-
 const emailRegEx = /\w+@\w+\.\w{2,10}/;
 const passwordRegEx = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
 const textRegEx = new RegExp("[a-zA-Z]{2,}");
 
 
-//  Envoyer les valeurs du formulaire a l'api
-
+//  Envoyer les valeurs du formulaire à l'api
 let signupUrl = `http://127.0.0.1:3000/api/auth/signup`;
 
 function sendToServer() {
@@ -62,18 +60,16 @@ function sendToServer() {
       throw new Error("la reponse du serveur n'est pas 200");
     }
   })
-    .then(() => {
-      //aller vers la page confirmation.fr
+    .then(() => { //aller vers la page confirmation.fr
       window.location.href = 'connexion.html'
     })
     .catch(error => {
       console.log(error);
     });
-
-
 }
+
+
 // appeller la fonction sendToServer quand on clique sur le boutton send à condition que les champs des formulaires sont tous bien remplis
-let form = document.getElementById('formulaire');
 let btnSend = document.getElementById('btnSend');
 
 function checkIsValid(item, regEx) {
@@ -93,13 +89,14 @@ btnSend.addEventListener('click', () => {
   let prenomValid = checkIsValid(firstname, textRegEx);
   let pwValid = checkIsValid(pw, passwordRegEx);
 
-
   if (mailValid && nomValid && prenomValid && pwValid) {
     sendToServer();
   }
 });
 
-var loadFile = function(event) {
-	var image = document.getElementById('output');
-	image.src = URL.createObjectURL(event.target.files[0]);
+
+// visiualiser l'image avant de l'envoyer au serveur 
+var loadFile = function (event) {
+  var image = document.getElementById('output');
+  image.src = URL.createObjectURL(event.target.files[0]);
 };

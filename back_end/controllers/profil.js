@@ -9,7 +9,7 @@ const { assert } = require('console');
 exports.getProfil = (req, res, next) => {
   User.findOne({
     where: {
-      id: req.params.id
+      id: res.locals.userId
     }
   }).then(
     (user) => {
@@ -39,17 +39,20 @@ exports.modifyProfil = (req, res) => {
   }
   User.update(user, {
     where: {
-      id: req.params.id
+      id: res.locals.userId
     }
   }).then(() => res.status(200).json({ message: 'Utilisateur modifié !' }))
-    .catch(error => res.status(400).json({ error }));
+    .catch(error => {
+      console.log(error);
+      res.status(400).json({ error : error })});
+    
 };
 
 
 exports.deleteProfil = (req, res) => {
   User.findOne({
       where: {
-        id: req.params.id
+        id: res.locals.userId
       }
     })
     .then(user => {
@@ -65,7 +68,7 @@ exports.deleteProfil = (req, res) => {
             fs.unlink(`images/${filename}`, () => {
               User.destroy({
                 where: {
-                  id: req.params.id
+                  id: res.locals.userId
                 }
               }).then(() => res.status(200).json({ message: 'Utilisateur supprimé!' }))
                 .catch(error => res.status(400).json({"error": error }));

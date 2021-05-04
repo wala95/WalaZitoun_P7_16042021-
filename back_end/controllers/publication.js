@@ -5,6 +5,7 @@ let { getLinkPreview, _ } = require('link-preview-js');
 
 
 exports.creatPublication = (req, res) => {// création des nouvelles publications
+
   let content = req.body.content;
   let img = null;
   if (req.file) {

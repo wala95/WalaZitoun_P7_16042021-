@@ -6,11 +6,11 @@ const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 
 
-router.get('/:id', auth, sauceCtrl.getProfil);
+router.get('/', auth, sauceCtrl.getProfil);
 
-router.put('/:id', auth, multer, sauceCtrl.modifyProfil);
+router.put('/', auth, multer, sauceCtrl.modifyProfil);
 
-router.delete('/:id', auth, sauceCtrl.deleteProfil);
+router.delete('/', auth, sauceCtrl.deleteProfil);
 
 
 module.exports = router;

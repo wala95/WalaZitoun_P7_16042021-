@@ -1,23 +1,16 @@
 "use strict";
 
+
 ///Récuperer le token avec l'id qui correspondent au user connecté
 const userString = localStorage.getItem('user');
 if (!userString) {
     window.location = "connexion.html";
 };
-const userJson = JSON.parse(userString);
-
-
 moment.locale('fr');
-
 const img = document.getElementById('imgUserPost');
-
-
-
 
 const image = document.getElementById('newImg');
 const content = document.getElementById('content');
-
 
 const imgPost = document.getElementById('imgPost');
 const contentPost = document.getElementById('contentPost');
@@ -26,21 +19,15 @@ const createdAt = document.getElementById('createdAt');
 const newComment = document.getElementById('newComment');
 
 
-const btnDeconnexion = document.getElementById("btnDeconnexion");
-
-
-
-const userUrl = `http://127.0.0.1:3000/api/profil/${userJson.id}`;
+const userJson = JSON.parse(userString);
+const userUrl = `http://127.0.0.1:3000/api/profil`;
 const publicationUrl = `http://127.0.0.1:3000/api/publication`;
 const commentaireUrl = `http://127.0.0.1:3000/api/commentaire`;
 
 
-
-
-//********************** demarrage de la page
-
+// démarrage de la page
 showUserPostZone();
-showAllPublications();
+
 
 // envoyer une requette GET à l'API(web service) pour récupérer les données de l'utlisateur
 function showUserPostZone() {
@@ -61,13 +48,10 @@ function showUserPostZone() {
         })
         //  consommer la promesse et retourner uniquement son body sous format json
         .then(response => response.json())
-
-        // consommer la promesse précédente pour: 
-        // récuperer les informations du user selectionné
+        // consommer la promesse précédente pour récuperer les informations du user selectionné
         .then(data => {
             img.src = data.img;
-
-
+            showAllPublications(data.id, data.isAdmin);
         })
         .catch(erreurCatche => console.log(`il y a une erreur ${erreurCatche.message}`));
     let btnPartager = document.getElementById('btnPartager');
@@ -82,7 +66,8 @@ function sendToServerPublication() {
     if (!content.value && !image.files[0]) {
         return
     }
-    if (!image.files || image.files[0] == null) {
+    //vérifier que le tableau des fichiers il n'est null et qe sont premier element n'est pas null 
+    if (!image.files || !image.files[0]) {
         let data = {
             content: content.value
         };
@@ -126,8 +111,8 @@ function sendToServerPublication() {
 
 function sendToServerUpdate(postId, newContent) {
     let data = {
-       
-        content : newContent
+
+        content: newContent
     }
     fetch(publicationUrl + `/${postId}`, {
         method: 'put',
@@ -155,7 +140,7 @@ function onPostContentChange(event, postId) {
     if (event.keyCode === 13 && event.target.value) {
         sendToServerUpdate(postId, event.target.value);
     }
-    
+
 }
 
 function updatePublication(iconeUpdate, postId, idHtmlPostContent) {
@@ -179,7 +164,7 @@ function updatePublication(iconeUpdate, postId, idHtmlPostContent) {
 
 
 // creer les post avec les comentaires
-function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, postId, postUserId) {
+function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, postId, postUserId, userId, isAdmin) {
 
 
     let imageUserPostDiv = document.createElement('div');
@@ -203,10 +188,10 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
     let newNameUserPost = document.createElement('a');
     newNameUserPost.textContent = nameUserPost;
     newNameUserPost.classList.add("profile-link", "textBleu", "col-8", "m-0")
-    if (userJson.id == postUserId) {
+    if (userId== postUserId) {
         newNameUserPost.setAttribute('href', "profil.html");
     }
-   
+
     let deletePost = document.createElement('i');
     deletePost.classList.add("fas", "fa-trash-alt", "mr-4", "text-danger", "cursorPointer");
     deletePost.setAttribute('onclick', `deletePublication(${postId})`);
@@ -231,11 +216,11 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
 
     userInfoPostDiv.appendChild(newNameUserPost);
     // soit l'utilsateur lui meme soit l'admin peuvent supprimer
-    if (userJson.id == postUserId || userJson.isAdmin) {
+    if (userId == postUserId || isAdmin) {
         userInfoPostDiv.appendChild(deletePost);
     }
     // uniquement l'utilisateur lui meme peut modifier
-    if (userJson.id == postUserId) {
+    if (userId == postUserId) {
         userInfoPostDiv.appendChild(updatePost);
     }
     userInfoPostDiv.appendChild(newCreatedAt);
@@ -302,7 +287,7 @@ function creatPost(imgUserPost, nameUserPost, createdAt, imgPost, contentPost, p
 
 
 // envoyer une requette GET à l'API(web service) pour récupérer les données des publication 
-function showAllPublications() {
+function showAllPublications(userId, isAdmin) {
     fetch(publicationUrl, {
         headers: {
             'Authorization': `bearer ${userJson.token}`,
@@ -325,8 +310,8 @@ function showAllPublications() {
         .then(posts => {
             let publication = document.getElementById("publication")
             for (let post of posts) {
-                let { postDiv, commentDiv } = creatPost(post.User.img, post.User.firstname + ' ' + post.User.lastname, post.createdAt, post.image, post.content, post.id, post.User.id);
-                showAllCommentaires(commentDiv, post.Commentaires)
+                let { postDiv, commentDiv } = creatPost(post.User.img, post.User.firstname + ' ' + post.User.lastname, post.createdAt, post.image, post.content, post.id, post.User.id, userId, isAdmin);
+                showAllCommentaires(commentDiv, post.Commentaires, userId, isAdmin);
                 publication.appendChild(postDiv);
             }
 
@@ -384,42 +369,42 @@ function sendToServerCommentaire(id, idTextArea) {
 
 
 // creer la liste des comentaires
-function createComment(img, user, createdAt, content, commentId, commentUserId) {
+function createComment(img, user, createdAt, content, commentId, commentUserId, userId, isAdmin) {
 
     let imgComment = document.createElement('img');
     imgComment.src = img;
-    imgComment.classList.add("profile-photo-sm", "col-1","p-0", "mr-3");
+    imgComment.classList.add("profile-photo-sm", "col-1", "p-0", "mr-3");
     imgComment.setAttribute("alt", "photo de profil");
 
 
     let textDiv = document.createElement('div');
-    textDiv.classList.add("col-11", "row", "textDiv", "rounded", "mb-2", "p-2","d-flex", "flex-column");
+    textDiv.classList.add("col-11", "row", "textDiv", "rounded", "mb-2", "p-2", "d-flex", "flex-column");
 
     let infoDiv = document.createElement('div');
     infoDiv.classList.add("d-flex", "flex-row");
 
     let userComment = document.createElement('a');
     userComment.textContent = user;
-    userComment.classList.add("textBleu", "p-0","col-5")
-    if (userJson.id == commentUserId) {
+    userComment.classList.add("textBleu", "p-0", "col-5")
+    if (userId == commentUserId) {
         userComment.setAttribute('href', "profil.html");
     }
 
 
     let createdAtComment = document.createElement('p');
     createdAtComment.textContent = moment(createdAt).fromNow();
-    createdAtComment.classList.add("date", "p-0","m-0","col-5");
+    createdAtComment.classList.add("date", "p-0", "m-0", "col-5");
 
 
     let deleteComment = document.createElement('i');
-    deleteComment.classList.add("fas", "fa-trash-alt", "text-danger", "cursorPointer","trash","col-1");
+    deleteComment.classList.add("fas", "fa-trash-alt", "text-danger", "cursorPointer", "trash", "col-1");
     deleteComment.setAttribute('onclick', `deleteCommentaire(${commentId})`);
 
- 
+
 
     infoDiv.appendChild(userComment);
     infoDiv.appendChild(createdAtComment);
-    if (userJson.id == commentUserId || userJson.isAdmin) {
+    if (userId == commentUserId || isAdmin) {
         infoDiv.appendChild(deleteComment);
     }
 
@@ -437,10 +422,10 @@ function createComment(img, user, createdAt, content, commentId, commentUserId) 
     return commentDiv;
 }
 // envoyer une requette GET à l'API(web service) pour récupérer les données des commentaires
-function showAllCommentaires(commentDiv, comments) {
+function showAllCommentaires(commentDiv, comments, userId, isAdmin) {
     for (let comment of comments) {
-        let wala = createComment(comment.User.img, comment.User.firstname + ' ' + comment.User.lastname, comment.createdAt, comment.content, comment.id, comment.User.id);
-        commentDiv.appendChild(wala);
+        let commentaire = createComment(comment.User.img, comment.User.firstname + ' ' + comment.User.lastname, comment.createdAt, comment.content, comment.id, comment.User.id, userId, isAdmin);
+        commentDiv.appendChild(commentaire);
     }
 }
 
@@ -507,7 +492,7 @@ function deleteCommentaire(id) {
 };
 
 // visiualiser l'image avant de l'envoyer au serveur
-function loadFile (event) {
+function loadFile(event) {
     let image = document.getElementById('imgPreview');
     image.src = URL.createObjectURL(event.target.files[0]);
     image.setAttribute("alt", "image de la publication ");
@@ -519,12 +504,13 @@ function loadFile (event) {
 function urlify(text) {
     var urlRegex = /(https?:\/\/[^\s]+)/g;
     return text.replace(urlRegex, function (url) {
-        return "<a target=_blank href='" +  url + "'>" + url + "</a>";
+        return "<a target=_blank href='" + url + "'>" + url + "</a>";
     });
 }
 
 
 //déconnexion 
+const btnDeconnexion = document.getElementById("btnDeconnexion");
 btnDeconnexion.addEventListener('click', () => {
     localStorage.removeItem('user')
     window.location = 'connexion.html';

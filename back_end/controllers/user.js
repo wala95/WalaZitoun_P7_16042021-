@@ -17,8 +17,6 @@ exports.signup = (req, res) => {// création des nouveaux users
     img = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
   }
   let bio=  req.body.bio;
-
-  console.log(firstname, lastname, email, pw, img, bio);
  
  if (!(emailRegEx.test(email) && passwordRegEx.test(pw) && textRegEex.test(firstname) && textRegEex.test(lastname)))  {
     return res.status(400).json({ message: "email or password not valid" });
@@ -52,15 +50,13 @@ exports.signup = (req, res) => {// création des nouveaux users
 };
 
 exports.login = (req, res, next) => { // permettre au utilisateur de se connecter
-  //TODO add control email and password not empty
 
   User.findOne({where: { email: req.body.email }})// trouver l'utilisateur
     .then(user => { 
-// vérifier si on a trouvé un user ou non
       if (!user) { // si user non trouvé
         return res.status(401).json({ message: 'Utilisateur non trouvé !' });
       }
-      bcrypt.compare(req.body.pw, user.pw) // user trouvé : comparer le MDP avec ceux enregistré dans BD
+      bcrypt.compare(req.body.pw, user.pw) // user trouvé : comparer le MDP avec celui enregistré dans BD
         .then(valid => {
           if (!valid) {// si mauvais MDP
             return res.status(401).json({ message: 'Mot de passe incorrect !' });
@@ -71,7 +67,7 @@ exports.login = (req, res, next) => { // permettre au utilisateur de se connecte
             token: jwt.sign(
               { userId: user.id, 
                 isAdmin: user.isAdmin 
-              },// identifiant utilisateur
+              },
               process.env.SECRET_JWT,// clée secrete pour l'encoudage
               { expiresIn: '24h' }// duréé de token
             )
